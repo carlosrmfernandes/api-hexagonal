@@ -16,7 +16,7 @@ class ExampleWeatherTest extends TestCase {
         $city=455856;
         $expceted=app(ClientAuthorization::class)->generateWeather($city);
         if (is_object($expceted)) {
-            $this->assertEquals($expceted->results->city_name, "Criciúma");
+            $this->assertEquals($expceted->results->city_name, "Criciuma");
         } else {
             dd('error');
         }

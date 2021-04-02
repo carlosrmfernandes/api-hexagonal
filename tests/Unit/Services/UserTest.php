@@ -8,6 +8,7 @@ use App\Repository\V1\UserType\UserTypeRepository;
 use App\Models\User;
 use App\Models\UserType;
 use Tests\TestCase;
+use Illuminate\Support\Str;
 class UserTest extends TestCase {
 
     /**
@@ -20,29 +21,36 @@ class UserTest extends TestCase {
 
     function test_create() {
         $attributes = [
-            "name" => "Carlos",
-            "email" => "carlos@gmail.com",
-            "password" => "12345",
-            "cpf_cnpj" => '22895159068',
-            "user_type_id" => 2,
-            "is_active" => 1,
+            'name' => "Hope",
+            'cpf_cnpj' => '35089173044',
+            'email' => 'support@hopetecno.com',
+            'phone' => '48996684418',
+            'state' => 'São Paulo',
+            'city' => 'Penha',
+            'address' => 'Rua Henrique Casela, 54 - Penha de França, São Paulo - SP, Brazil',
+            'is_active' => 1,
+            'password' => bcrypt(123456),
+            'company_name' => 'Hope',
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
+            'user_type_id' => 2,
         ];
-        
+
 
        $UserRepository = new UserRepository(new User());
        $userTypeRepository = new UserTypeRepository(new UserType());
        $userRepository = new UserServiceRegistration(
                $UserRepository, $userTypeRepository
        );
-       $user = $userRepository->store($attributes);        
-        if (is_object($user)) {            
-            $expceted = User::find($user->id);            
-            $this->assertEquals($expceted->id, $user->id);            
+       $user = $userRepository->store($attributes);
+        if (is_object($user)) {
+            $expceted = User::find($user->id);
+            $this->assertEquals($expceted->id, $user->id);
         } else {
             dd($user);
         }
     }
-    
-    
+
+
 
 }

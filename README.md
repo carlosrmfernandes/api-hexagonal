@@ -66,6 +66,11 @@ Criar um diretório na are trabalho chamado Hope
 Clonar o projecto dentro desse diretório
 ```
 
+Executar o docker compuser
+```php
+docker-compose up 
+```
+
 ## Comandos básicos 
 
 ```php
@@ -117,6 +122,10 @@ composer dump-autoload
 
 ```php
 php artisan migrate
+```
+
+```php
+php artisan db:seed
 ```
 
 ## Execução das queue 
