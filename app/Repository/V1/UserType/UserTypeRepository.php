@@ -33,7 +33,7 @@ class UserTypeRepository extends BaseRepository
         try {
             $userType = $this->obj->find($id);
             if ($userType) {
-                $userType->updateOrCreate([
+                $userType=$userType->updateOrCreate([
                     'id' => $id,
                         ], $attributes);
             }

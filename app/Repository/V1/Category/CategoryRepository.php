@@ -1,26 +1,29 @@
 <?php
 
-namespace App\Repository\V1\User;
+namespace App\Repository\V1\Category;
 
-use App\Models\User;
+use App\Models\Category;
 use App\Repository\V1\BaseRepository;
 use Illuminate\Support\Facades\DB;
 
-class UserRepository extends BaseRepository
+class CategoryRepository extends BaseRepository
 {
 
-    public function __construct(User $user)
+    public function __construct(Category $category)
     {
-        parent::__construct($user);
+        parent::__construct($category);
     }
-
+    public function all(): object
+    {
+        return (object) null ;
+    }
     public function save(array $attributes): object
     {
         DB::beginTransaction();
         try {
-            $user = $this->obj->create($attributes);
+            $category = $this->obj->create($attributes);
             DB::commit();
-            return $user;
+            return $category;
         } catch (Exception $ex) {
             DB::rollback();
             return $ex->getMessage();
@@ -31,30 +34,25 @@ class UserRepository extends BaseRepository
     {
         DB::beginTransaction();
         try {
-            $user = $this->obj->find($id);
-            if ($user) {
-                $user=$user->updateOrCreate([
+            $category = $this->obj->find($id);
+            if ($category) {
+                $category = $category->updateOrCreate([
                     'id' => $id,
                         ], $attributes);
             }
 
             DB::commit();
-            return (object) $user;
+            return (object) $category;
         } catch (Exception $ex) {
             DB::rollback();
             return $ex->getMessage();
         }
     }
 
-    public function login($column, $value)
-    {
-        return $this->findByColumn($column, $value)->first();
-    }
-
     public function show(int $id): object
     {
         return (object) $this->obj
-                        ->with('userType')
+                        ->with('subCategory')
                         ->where('id', $id)
                         ->first();
     }

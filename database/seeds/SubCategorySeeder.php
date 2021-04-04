@@ -27,6 +27,8 @@ class SubCategorySeeder extends Seeder
             ['name' => 'Higiene e Cuidados Pessoais', 'checked' => false, 'category_id' => 2],
             ['name' => 'Bebês', 'checked' => false, 'category_id' => 2],
 
+            ['name' => 'Alimentação', 'checked' => false, 'category_id' => 3],
+
             ['name' => 'Higiene e Limpeza', 'checked' => false, 'category_id' => 4],
             ['name' => 'Medicina e Saúde', 'checked' => false, 'category_id' => 4],
             ['name' => 'Rações', 'checked' => false, 'category_id' => 4],

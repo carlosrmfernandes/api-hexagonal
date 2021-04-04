@@ -29,8 +29,7 @@ trait RuleTrait
             'is_active' => 'required|boolean|max:1',
             'password' => 'required|string|max:255',
             'company_name' => 'string|max:255',
-            'user_type_id' => 'required|integer|max:255',
-
+            'user_type_id' => 'required|integer',
         ];
     }
 

@@ -34,6 +34,14 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
         Route::get('user-type', 'V1\\UserTypeController@index');
 
     });
+
+    //Products
+    Route::post('register-product', 'V1\\ProductController@store');
+    Route::get('product-show/{id}', 'V1\\ProductController@show');
+    Route::post('product-update/{id}', 'V1\\ProductController@update');
+
+    //Category
+    Route::get('category-show/{id}', 'V1\\CategoryController@show');
 });
 
 Route::group(['prefix' => ''], function ($router) {
