@@ -31,8 +31,19 @@ class MercadoPagoCotroller extends Controller
      */
     public function store(Request $request): object
     {
-
+        return response()->json(['data' => app(ClientAuthorization::class)->generatePayment($request)]);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showIdentificationType()
+    {
+        return response()->json(['data' => app(ClientAuthorization::class)->getIdentificationType()]);
+    }
+
 
     /**
      * Display the specified resource.
@@ -42,7 +53,7 @@ class MercadoPagoCotroller extends Controller
      */
     public function show($id)
     {
-        return response()->json(['data' => app(ClientAuthorization::class)->generateWeather($id)]);
+        return response()->json(['data' => app(ClientAuthorization::class)->generatePayment($id)]);
     }
 
     /**
