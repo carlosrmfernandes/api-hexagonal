@@ -35,6 +35,8 @@ class MercadoPagoStrategy implements MercadoPagoInterface
     ): Object
     {
         $body = null;
+        $config = config('mercadopago');
+
         try {
 
             if (is_object($request)) {
@@ -44,7 +46,7 @@ class MercadoPagoStrategy implements MercadoPagoInterface
             $response = $this->client->request('POST', '/payments' , [
                 'body' => $body,
                 'headers' => [
-                    'Authorization' => 'Bearer ' . config('mp_access_token'),
+                    'Authorization' => 'Bearer ' . $config['mp_access_token']
                 ]
             ]);
             return json_decode($response->getBody()->getContents());
