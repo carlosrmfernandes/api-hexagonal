@@ -28,6 +28,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->unsignedBigInteger('user_type_id');
             $table->foreign('user_type_id')->references('id')->on('user_types');
+            $table->unsignedBigInteger('category_id')->nullable();;
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -3,24 +3,20 @@
 namespace App\Http\Controllers\V1;
 
 use Illuminate\Http\Request;
-use App\Service\V1\Category\CategoryServiceShow;
-use App\Service\V1\Category\CategoryServiceAll;
+use App\Service\V1\Establishment\EstablishmentServiceShow;
 use App\Http\Controllers\Controller;
 
 
-class CategoryController extends Controller
+class EstablishmentController extends Controller
 {
     protected $categoryServiceShow;
-    protected $categoryServiceAll;
 
     public function __construct(
 
-        CategoryServiceShow $categoryServiceShow,
-        CategoryServiceAll $categoryServiceAll
+        // EstablishmentShow $establishmentShow
 
     ) {
-        $this->categoryServiceShow = $categoryServiceShow;
-        $this->categoryServiceAll = $categoryServiceAll;
+        // $this->establishmentShow = $establishmentShow;
     }
 
     /**
@@ -30,9 +26,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categoryServiceAll = $this->categoryServiceAll->all();
 
-        return response()->json(['data' => $categoryServiceAll]);
     }
 
     /**
@@ -54,9 +48,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $product = $this->categoryServiceShow->show($id);
 
-        return response()->json(['data' => $product]);
     }
 
     /**

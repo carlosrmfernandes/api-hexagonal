@@ -11,10 +11,14 @@ class Category extends Model
         'name', 'checked'
     ];
     protected $visible = [
-        'id', 'name', 'checked','subCategory'
+        'id', 'name', 'checked','subCategory','users'
     ];
 
     public function subCategory(){
         return $this->hasMany(SubCategory::class,'category_id','id');
+    }
+
+    public function users(){
+        return $this->hasMany(User::class,'category_id','id',);
     }
 }

@@ -41,6 +41,7 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
     Route::post('product-update/{id}', 'V1\\ProductController@update');
 
     //Category
+    Route::get('category', 'V1\\CategoryController@index');
     Route::get('category-show/{id}', 'V1\\CategoryController@show');
 });
 

@@ -15,7 +15,8 @@ class CategoryRepository extends BaseRepository
     }
     public function all(): object
     {
-        return (object) null ;
+        return (object) $this->obj
+                            ->get();
     }
     public function save(array $attributes): object
     {
