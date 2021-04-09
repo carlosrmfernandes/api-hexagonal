@@ -6,10 +6,16 @@ interface MercadoPagoInterface
 {
 
     /**
-     * @param int $id
+     * @param $request
      * @return Object
      */
-    public function generateWeather(
-        int $id
+    public function generatePayment(
+        $request
     ): Object;
+
+    /**
+     * @param $request
+     * @return Object
+     */
+    public function getIdentificationType(): Object;
 }
