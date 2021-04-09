@@ -26,20 +26,56 @@ class MercadoPagoStrategy implements MercadoPagoInterface
     }
 
     /**
-     * @param int $id
+     * @param  $request
      * @return Object
      * @throws Exception
      */
-    public function generateWeather(
-    int $id
+    public function generatePayment(
+        $request
     ): Object
     {
+        $body = null;
         try {
 
-            $response = $this->client->request('GET', '?woeid='.$id , [
-                'json' => '',
+            if (is_object($request)) {
+                $body = $request->all();
+            }
+
+            $response = $this->client->request('POST', '/payments' , [
+                'body' => $body,
+                'headers' => [
+                    'Authorization' => 'Bearer ' . config('mp_access_token'),
+                ]
             ]);
             return json_decode($response->getBody()->getContents());
+        } catch (ClientException $exception) {
+            $response = json_decode($exception->getResponse()->getBody()->getContents());
+
+            throw new MercadoPagoException(
+            $response->message, $exception->getCode()
+            );
+        } catch (Exception $exception) {
+            throw $exception;
+        }
+    }
+
+
+    /**
+     * @return Object
+     * @throws Exception
+     */
+    public function getIdentificationType(
+    ): Object
+    {
+        $config = config('mercadopago');
+
+        try {
+            $response = $this->client->request('GET', '/v1/identification_types' , [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $config['mp_access_token']
+                ]
+            ]);
+            return (object) json_decode($response->getBody()->getContents());
         } catch (ClientException $exception) {
             $response = json_decode($exception->getResponse()->getBody()->getContents());
 
