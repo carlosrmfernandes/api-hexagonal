@@ -4,6 +4,7 @@ namespace App\Service\V1\User;
 
 use Illuminate\Http\Request;
 use App\Repository\V1\User\UserRepository;
+use App\Repository\V1\Category\CategoryRepository;
 use App\Repository\V1\UserType\UserTypeRepository;
 use function bcrypt;
 use Validator;
@@ -19,16 +20,30 @@ class UserServiceUpdate
 
     public function __construct(
         UserRepository $userRepository,
-        UserTypeRepository $userTypeRepository
+        UserTypeRepository $userTypeRepository,
+        CategoryRepository $categoryRepository
     )
     {
         $this->userRepository = $userRepository;
         $this->userTypeRepository = $userTypeRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function update(int $id, Request $request)
     {
         $attributes = $request->all();
+
+        if (($attributes['user_type_id']) && $attributes['user_type_id']==2) {
+            if(empty($attributes['category_id'])){
+                return "The category_id field is required.";
+            }
+        }
+
+        if (($attributes['user_type_id']) && $attributes['user_type_id']==1) {
+            if($attributes['category_id']){
+                return "Remove the field category_id.";
+            }
+        }
 
         $attributes['cpf_cnpj'] = preg_replace('/[^0-9]/', '', (string) $attributes['cpf_cnpj']);
 
@@ -44,6 +59,9 @@ class UserServiceUpdate
 
         if (!get_object_vars(($this->userTypeRepository->show($attributes['user_type_id'])))) {
             return "user_type_id invalid";
+        }
+        if (!get_object_vars($this->categoryRepository->show($attributes['category_id']))) {
+            return "category_id invalid";
         }
 
         $attributes['password'] = bcrypt($attributes['password']);

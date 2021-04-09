@@ -18,10 +18,10 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'cpf_cnpj', 'email', 'phone', 'state', 'city','address','is_active','password','company_name','user_type_id'
+        'name', 'cpf_cnpj', 'email', 'phone', 'state', 'city','address','is_active','password','company_name','category_id','user_type_id'
     ];
     protected $visible = [
-        'id', 'name', 'cpf_cnpj', 'email', 'phone', 'state', 'city','address','is_active','password','company_name','user_type_id','userType'
+        'id', 'name', 'cpf_cnpj', 'email', 'phone', 'state', 'city','address','is_active','password','company_name','category_id','user_type_id','userType'
     ];
 
     /**

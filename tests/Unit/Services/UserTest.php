@@ -5,8 +5,10 @@ namespace Tests\Unit\Services;
 use App\Service\V1\User\UserServiceRegistration;
 use App\Repository\V1\User\UserRepository;
 use App\Repository\V1\UserType\UserTypeRepository;
+use App\Repository\V1\Category\CategoryRepository;
 use App\Models\User;
 use App\Models\UserType;
+use App\Models\Category;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 class UserTest extends TestCase {
@@ -34,14 +36,17 @@ class UserTest extends TestCase {
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
             'user_type_id' => 2,
+            'category_id' => 1
         ];
 
 
        $UserRepository = new UserRepository(new User());
        $userTypeRepository = new UserTypeRepository(new UserType());
+       $categoryRepository = new CategoryRepository(new Category());
+
        $userRepository = new UserServiceRegistration(
-               $UserRepository, $userTypeRepository
-       );
+           $UserRepository,$userTypeRepository,$categoryRepository
+        );
        $user = $userRepository->store($attributes);
         if (is_object($user)) {
             $expceted = User::find($user->id);
