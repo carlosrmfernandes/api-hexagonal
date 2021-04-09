@@ -7,31 +7,48 @@ use App\Components\MercadoPagoIntegration\Exceptions\MercadoPagoException;
 class Client
 {
     /**
-     * @var MercadoPagoInterface
+     * @var mercadoPagoInterface
      */
-    protected $MercadoPagoInterface;
+    protected $mercadoPagoInterface;
 
     /**
      * Client constructor.
-     * @param MercadoPagoInterface $MercadoPagoInterface
+     * @param MercadoPagoInterface $mercadoPagoInterface
      */
-    public function __construct(MercadoPagoInterface $MercadoPagoInterface)
+    public function __construct(MercadoPagoInterface $mercadoPagoInterface)
     {
-        $this->MercadoPagoInterface = $MercadoPagoInterface;
+        $this->mercadoPagoInterface = $mercadoPagoInterface;
     }
 
     /**
-     * @param int $id
+     * @param Request $request
      * @return Object
      * @throws MercadoPagoException
      */
-    public function generateWeather(
-        int $id
+    public function generatePayment(
+        $request
     ): Object {
         try {
-            return $this->MercadoPagoInterface->generateWeather(
-                $id
+            return $this->mercadoPagoInterface->generatePayment(
+                $request
             );
+        } catch (Exception $exception) {
+            throw new MercadoPagoException(
+                $exception->getMessage(),
+                $exception->getCode()
+            );
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return Object
+     * @throws MercadoPagoException
+     */
+    public function getIdentificationType(
+    ): Object {
+        try {
+            return $this->mercadoPagoInterface->getIdentificationType();
         } catch (Exception $exception) {
             throw new MercadoPagoException(
                 $exception->getMessage(),
