@@ -19,7 +19,7 @@ class MercadoPagoException extends Exception
         $code = 500,
         Throwable $previous = null
     ) {
-        Log::error('Weather Error: ' . $message);
+        Log::error('Mercado Pago Error: ' . $message);
         parent::__construct($message, $code, $previous);
     }
 }
