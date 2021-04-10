@@ -24,6 +24,18 @@ class MercadoPagoCotroller extends Controller
     }
 
     /**
+     * storeCustomer a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeCustomer(Request $request): object
+    {
+        return response()->json(['data' => app(ClientAuthorization::class)->createsCustomer($request)]);
+    }
+
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -33,6 +45,7 @@ class MercadoPagoCotroller extends Controller
     {
         return response()->json(['data' => app(ClientAuthorization::class)->generatePayment($request)]);
     }
+
 
     /**
      * Display the specified resource.
@@ -44,6 +57,17 @@ class MercadoPagoCotroller extends Controller
         return response()->json(['data' => app(ClientAuthorization::class)->getIdentificationType()]);
     }
 
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showCustomer($id)
+    {
+        return response()->json(['data' => app(ClientAuthorization::class)->getCustomer($id)]);
+    }
 
     /**
      * Display the specified resource.
