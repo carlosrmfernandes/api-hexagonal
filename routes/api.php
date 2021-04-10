@@ -48,6 +48,8 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
 Route::group(['prefix' => ''], function ($router) {
     Route::post('register-user', 'V1\\UserController@store');
     Route::post('login', 'V1\\AuthController@login');
+    Route::post('customers', 'V1\\MercadoPagoCotroller@storeCustomer');
+    Route::get('customers/{id}', 'V1\\MercadoPagoCotroller@showCustomer');
     Route::get('example-weather/{id}', 'V1\\ExampleWeatherCotroller@show');
     Route::get('indetification-types', 'V1\\MercadoPagoCotroller@showIdentificationType');
 });
