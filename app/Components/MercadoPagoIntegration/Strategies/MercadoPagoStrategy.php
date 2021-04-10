@@ -61,7 +61,6 @@ class MercadoPagoStrategy implements MercadoPagoInterface
         }
     }
 
-
     /**
      * @return Object
      * @throws Exception
@@ -89,4 +88,67 @@ class MercadoPagoStrategy implements MercadoPagoInterface
         }
     }
 
+    /**
+     * @param  $request
+     * @return Object
+     * @throws Exception
+     */
+    public function createsCustomer(
+        $request
+    ): Object
+    {
+        $body = null;
+        $config = config('mercadopago');
+
+        try {
+
+            if (is_object($request)) {
+                $body = $request->all();
+            }
+
+            $response = $this->client->request('POST', '/v1/customers' , [
+                'body' => $body,
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $config['mp_access_token']
+                ]
+            ]);
+            return (object) json_decode($response->getBody()->getContents());
+        } catch (ClientException $exception) {
+            $response = json_decode($exception->getResponse()->getBody()->getContents());
+
+            throw new MercadoPagoException(
+            $response->message, $exception->getCode()
+            );
+        } catch (Exception $exception) {
+            throw $exception;
+        }
+    }
+
+    /**
+     * @return Object
+     * @throws Exception
+     */
+    public function getCustomer(
+        $id
+    ): Object
+    {
+        $config = config('mercadopago');
+
+        try {
+            $response = $this->client->request('GET', '/v1/customers/' . $id , [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $config['mp_access_token']
+                ]
+            ]);
+            return (object) json_decode($response->getBody()->getContents());
+        } catch (ClientException $exception) {
+            $response = json_decode($exception->getResponse()->getBody()->getContents());
+
+            throw new MercadoPagoException(
+            $response->message, $exception->getCode()
+            );
+        } catch (Exception $exception) {
+            throw $exception;
+        }
+    }
 }
