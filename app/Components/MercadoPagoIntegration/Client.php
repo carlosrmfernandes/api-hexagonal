@@ -21,7 +21,7 @@ class Client
     }
 
     /**
-     * @param Request $request
+     * @param $request
      * @return Object
      * @throws MercadoPagoException
      */
@@ -41,7 +41,6 @@ class Client
     }
 
     /**
-     * @param Request $request
      * @return Object
      * @throws MercadoPagoException
      */
@@ -56,4 +55,43 @@ class Client
             );
         }
     }
+
+    /**
+     * @param $request
+     * @return Object
+     * @throws MercadoPagoException
+     */
+    public function createsCustomer(
+        $request
+    ): Object {
+        try {
+            return $this->mercadoPagoInterface->createsCustomer(
+                $request
+            );
+        } catch (Exception $exception) {
+            throw new MercadoPagoException(
+                $exception->getMessage(),
+                $exception->getCode()
+            );
+        }
+    }
+
+    /**
+     * @return Object
+     * @throws MercadoPagoException
+     */
+    public function getCustomer(
+        $id
+        ): Object {
+            try {
+                return $this->mercadoPagoInterface->getCustomer(
+                    $id
+                );
+            } catch (Exception $exception) {
+                throw new MercadoPagoException(
+                    $exception->getMessage(),
+                    $exception->getCode()
+                );
+            }
+        }
 }
