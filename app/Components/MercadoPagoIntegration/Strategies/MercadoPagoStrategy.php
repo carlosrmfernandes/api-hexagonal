@@ -107,15 +107,17 @@ class MercadoPagoStrategy implements MercadoPagoInterface
             }
 
             $response = $this->client->request('POST', '/v1/customers' , [
-                'body' => $body,
+                'json' => $body,
                 'headers' => [
+                    "Accept" => "application/json",
+                    "Content-Type" => "application/json",
                     'Authorization' => 'Bearer ' . $config['mp_access_token']
                 ]
             ]);
             return (object) json_decode($response->getBody()->getContents());
         } catch (ClientException $exception) {
             $response = json_decode($exception->getResponse()->getBody()->getContents());
-
+            dd($response);
             throw new MercadoPagoException(
             $response->message, $exception->getCode()
             );
