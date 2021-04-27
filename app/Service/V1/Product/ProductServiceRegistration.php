@@ -2,7 +2,6 @@
 
 namespace App\Service\V1\Product;
 
-use App\Models\SubCategory;
 use App\Repository\V1\Product\ProductRepository;
 use App\Repository\V1\User\UserRepository;
 use App\Repository\V1\SubCategory\SubCategoryRepository;

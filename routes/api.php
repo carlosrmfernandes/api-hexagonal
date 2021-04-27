@@ -21,32 +21,42 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
 
     //User
     Route::middleware(['checkUser'])->group(function () {
-        Route::post('user-update/{id}', 'V1\\UserController@update');
-        Route::get('user-show/{id}', 'V1\\UserController@show');
+        Route::post('user/{id}', 'V1\\UserController@update');
+        Route::get('user/{id}', 'V1\\UserController@show');
     });
 
     //User Type
     Route::middleware(['blockRoute'])->group(function () {
-        Route::post('user-type-register', 'V1\\UserTypeController@store');
-        Route::post('user-type-update/{id}', 'V1\\UserTypeController@update');
+        Route::post('user-type', 'V1\\UserTypeController@store');
+        Route::post('user-type/{id}', 'V1\\UserTypeController@update');
 
-        Route::get('user-type-show/{id}', 'V1\\UserTypeController@show');
+        Route::get('user-type/{id}', 'V1\\UserTypeController@show');
         Route::get('user-type', 'V1\\UserTypeController@index');
 
     });
 
     //Products
-    Route::post('register-product', 'V1\\ProductController@store');
-    Route::get('product-show/{id}', 'V1\\ProductController@show');
-    Route::post('product-update/{id}', 'V1\\ProductController@update');
+    Route::post('product', 'V1\\ProductController@store');
+    Route::get('product/{id}', 'V1\\ProductController@show');
+    Route::post('product/{id}', 'V1\\ProductController@update');
 
     //Category
     Route::get('category', 'V1\\CategoryController@index');
-    Route::get('category-show/{id}', 'V1\\CategoryController@show');
+    Route::get('category/{id}', 'V1\\CategoryController@show');
+
+    //Establishment
+    Route::get('establishment/{id}', 'V1\\EstablishmentController@show');
+    Route::get('establishment', 'V1\\EstablishmentController@index');
+
+    //Delivery Order
+    Route::post('delivery-order', 'V1\\DeliveryOrderController@store');
+    Route::get('delivery-order', 'V1\\DeliveryOrderController@index');
+    Route::get('delivery-order/{id}', 'V1\\DeliveryOrderController@show');
+    Route::post('delivery-order/{id}', 'V1\\DeliveryOrderController@update');
 });
 
 Route::group(['prefix' => ''], function ($router) {
-    Route::post('register-user', 'V1\\UserController@store');
+    Route::post('user', 'V1\\UserController@store');
     Route::post('login', 'V1\\AuthController@login');
     Route::get('example-weather/{id}', 'V1\\ExampleWeatherCotroller@show');
 });
