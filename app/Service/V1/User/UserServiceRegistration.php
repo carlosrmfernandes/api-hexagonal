@@ -44,7 +44,7 @@ class UserServiceRegistration
         }
 
         if (($attributes['user_type_id']) && $attributes['user_type_id']==1) {
-            if($attributes['category_id']){
+            if(!empty($attributes['category_id'])){
                 return "Remove the field category_id.";
             }
         }
@@ -63,9 +63,10 @@ class UserServiceRegistration
         if (!get_object_vars(($this->userTypeRepository->show($attributes['user_type_id'])))) {
             return "user_type_id invalid";
         }
-
-        if (!get_object_vars($this->categoryRepository->show($attributes['category_id']))) {
-            return "category_id invalid";
+        if (($attributes['user_type_id']) && $attributes['user_type_id']==2) {
+            if (!get_object_vars($this->categoryRepository->show($attributes['category_id']))) {
+                return "category_id invalid";
+            }
         }
 
         $attributes['password'] = bcrypt($attributes['password']);

@@ -54,7 +54,7 @@ class UserRepository extends BaseRepository
     public function show(int $id): object
     {
         return (object) $this->obj
-                        ->with('userType')
+                        ->with(['userType','category'])
                         ->where('id', $id)
                         ->first();
     }

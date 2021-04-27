@@ -4,7 +4,7 @@ namespace App\Service\V1\Establishment;
 
 use App\Repository\V1\Establishment\EstablishmentRepository;
 
-class EstablishmentServiceShow
+class establishmentServiceAll
 {
 
     protected $categoryRepository;
@@ -15,14 +15,9 @@ class EstablishmentServiceShow
         $this->establishmentRepository = $establishmentRepository;
     }
 
-    public function show(int $id)
+    public function all($searchQuery = null)
     {
-        return $this->establishmentRepository->show($id);
-    }
-
-    public function showEstablishmentWithCategory(int $id)
-    {
-        return $this->establishmentRepository->show($id);
+        return $this->establishmentRepository->all($searchQuery);
     }
 
 }

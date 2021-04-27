@@ -4,19 +4,27 @@ namespace App\Http\Controllers\V1;
 
 use Illuminate\Http\Request;
 use App\Service\V1\Establishment\EstablishmentServiceShow;
+use App\Service\V1\Establishment\EstablishmentServiceAll;
+use App\Filters\V1\Establishment\EstablishmentFilters;
 use App\Http\Controllers\Controller;
 
 
 class EstablishmentController extends Controller
 {
-    protected $categoryServiceShow;
+    protected $establishmentServiceShow;
+    protected $establishmentServiceAll;
+    protected $establishmentFilters;
 
     public function __construct(
 
-        // EstablishmentShow $establishmentShow
+        EstablishmentServiceShow $establishmentServiceShow,
+        EstablishmentServiceAll $establishmentServiceAll,
+        EstablishmentFilters $establishmentFilters
 
     ) {
-        // $this->establishmentShow = $establishmentShow;
+        $this->establishmentServiceShow = $establishmentServiceShow;
+        $this->establishmentServiceAll = $establishmentServiceAll;
+        $this->establishmentFilters = $establishmentFilters;
     }
 
     /**
@@ -24,9 +32,10 @@ class EstablishmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
+        $establishment = $this->establishmentFilters->apply($request->all());
+        return response()->json(['data' => $establishment]);
     }
 
     /**
@@ -48,7 +57,9 @@ class EstablishmentController extends Controller
      */
     public function show($id)
     {
+        $establishmentWithProduct = $this->establishmentServiceShow->show($id);
 
+        return response()->json(['data' => $establishmentWithProduct]);
     }
 
     /**
