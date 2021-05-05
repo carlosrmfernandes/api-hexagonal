@@ -32,4 +32,28 @@ interface MercadoPagoInterface
     public function getCustomer(
         $id
     ): Object;
+
+
+    /**
+     * @param $request
+     * @return Object
+     */
+    public function createsCard(
+        $request, $customerID
+    ): Object;
+
+    /**
+     * @return Object
+     */
+    public function getCards(
+        $customerID
+    ): Object;
+
+    /**
+     * @param $request
+     * @return Object
+     */
+    public function deleteCard(
+        $customerID, $id
+    ): Object;
 }

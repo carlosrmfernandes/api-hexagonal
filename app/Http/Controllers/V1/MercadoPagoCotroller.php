@@ -14,16 +14,6 @@ class MercadoPagoCotroller extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-
-    }
-
-    /**
      * storeCustomer a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -46,6 +36,16 @@ class MercadoPagoCotroller extends Controller
         return response()->json(['data' => app(ClientAuthorization::class)->generatePayment($request)]);
     }
 
+    /**
+     * storeCustomer a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeCard(Request $request, $customerID): object
+    {
+        return response()->json(['data' => app(ClientAuthorization::class)->createsCard($request, $customerID)]);
+    }
 
     /**
      * Display the specified resource.
@@ -56,7 +56,6 @@ class MercadoPagoCotroller extends Controller
     {
         return response()->json(['data' => app(ClientAuthorization::class)->getIdentificationType()]);
     }
-
 
     /**
      * Display the specified resource.
@@ -81,15 +80,14 @@ class MercadoPagoCotroller extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Display the resource from specified user.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(int $id, Request $request)
+    public function showCards($customerID)
     {
-
+        return response()->json(['data' => app(ClientAuthorization::class)->getCards($customerID)]);
     }
 
     /**
@@ -98,9 +96,9 @@ class MercadoPagoCotroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteCard($customerID)
     {
-
+        return response()->json(['data' => app(ClientAuthorization::class)->deleteCard($customerID)]);
     }
 
 }

@@ -59,6 +59,9 @@ Route::group(['prefix' => ''], function ($router) {
     Route::post('user', 'V1\\UserController@store');
     Route::post('login', 'V1\\AuthController@login');
     Route::post('customers', 'V1\\MercadoPagoCotroller@storeCustomer');
+    Route::post('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@storeCard');
+    Route::get('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@showCards');
+    Route::delete('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@deleteCard');
     Route::get('customers/{id}', 'V1\\MercadoPagoCotroller@showCustomer');
     Route::get('example-weather/{id}', 'V1\\ExampleWeatherCotroller@show');
     Route::get('indetification-types', 'V1\\MercadoPagoCotroller@showIdentificationType');
