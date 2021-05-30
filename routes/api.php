@@ -37,17 +37,7 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
 
     //Products
     Route::post('product', 'V1\\ProductController@store');
-    Route::get('product/{id}', 'V1\\ProductController@show');
     Route::post('product/{id}', 'V1\\ProductController@update');
-
-    //Category
-    Route::get('category', 'V1\\CategoryController@index');
-    Route::get('category/{id}', 'V1\\CategoryController@show');
-    Route::get('category-establishment/{id}', 'V1\\CategoryController@categoryWithEstablishment');
-
-    //Establishment
-        Route::get('establishment/{id}', 'V1\\EstablishmentController@showSubCategoryWithProduct');
-        Route::get('establishment', 'V1\\EstablishmentController@index');
 
     //Delivery Order
     Route::post('delivery-order', 'V1\\DeliveryOrderController@store');
@@ -57,7 +47,20 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
 });
 
 Route::group(['prefix' => ''], function ($router) {
+    //User
     Route::post('user', 'V1\\UserController@store');
     Route::post('login', 'V1\\AuthController@login');
     Route::get('example-weather/{id}', 'V1\\ExampleWeatherCotroller@show');
+
+    //Category
+    Route::get('category', 'V1\\CategoryController@index');
+    Route::get('category/{id}', 'V1\\CategoryController@show');
+    Route::get('category-establishment/{id}', 'V1\\CategoryController@categoryWithEstablishment');
+
+    //Products
+    Route::get('product/{id}', 'V1\\ProductController@show');
+
+    //Establishment
+    Route::get('establishment/{id}', 'V1\\EstablishmentController@showSubCategoryWithProduct');
+    Route::get('establishment', 'V1\\EstablishmentController@index');
 });
