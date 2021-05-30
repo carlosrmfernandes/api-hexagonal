@@ -7,24 +7,27 @@ use App\Service\V1\Establishment\EstablishmentServiceShow;
 use App\Service\V1\Establishment\EstablishmentServiceAll;
 use App\Filters\V1\Establishment\EstablishmentFilters;
 use App\Http\Controllers\Controller;
-
+use App\Service\V1\Establishment\EstablishmentServiceShowSubCategory;
 
 class EstablishmentController extends Controller
 {
     protected $establishmentServiceShow;
     protected $establishmentServiceAll;
     protected $establishmentFilters;
+    protected $establishmentServiceShowSubCategory;
 
     public function __construct(
 
         EstablishmentServiceShow $establishmentServiceShow,
         EstablishmentServiceAll $establishmentServiceAll,
-        EstablishmentFilters $establishmentFilters
+        EstablishmentFilters $establishmentFilters,
+        EstablishmentServiceShowSubCategory $establishmentServiceShowSubCategory
 
     ) {
         $this->establishmentServiceShow = $establishmentServiceShow;
         $this->establishmentServiceAll = $establishmentServiceAll;
         $this->establishmentFilters = $establishmentFilters;
+        $this->establishmentServiceShowSubCategory = $establishmentServiceShowSubCategory;
     }
 
     /**
@@ -46,7 +49,6 @@ class EstablishmentController extends Controller
      */
     public function store(Request $request)
     {
-
     }
 
     /**
@@ -62,6 +64,13 @@ class EstablishmentController extends Controller
         return response()->json(['data' => $establishmentWithProduct]);
     }
 
+    public function showSubCategoryProduct($id)
+    {
+        $establishmentSubCategoryProduct = $this->establishmentServiceShowSubCategory->showSubCategoryProduct($id);
+
+        return response()->json(['data' => $establishmentSubCategoryProduct]);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -71,7 +80,6 @@ class EstablishmentController extends Controller
      */
     public function update(int $id, Request $request)
     {
-
     }
 
     /**

@@ -11,11 +11,15 @@ class SubCategory extends Model
         'name', 'checked','category_id'
     ];
     protected $visible = [
-        'id', 'name', 'checked','category_id','category'
+        'id', 'name', 'checked','category_id','category','products'
     ];
 
     public function category(){
         return $this->hasOne(Category::class,'id','category_id');
+    }
+
+    public function products(){
+        return $this->hasMany(Product::class,'sub_category_id','id');
     }
 
 }

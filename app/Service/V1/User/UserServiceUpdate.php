@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repository\V1\User\UserRepository;
 use App\Repository\V1\Category\CategoryRepository;
 use App\Repository\V1\UserType\UserTypeRepository;
+use Illuminate\Support\Facades\Storage;
 use function bcrypt;
 use Validator;
 
@@ -22,8 +23,7 @@ class UserServiceUpdate
         UserRepository $userRepository,
         UserTypeRepository $userTypeRepository,
         CategoryRepository $categoryRepository
-    )
-    {
+    ) {
         $this->userRepository = $userRepository;
         $this->userTypeRepository = $userTypeRepository;
         $this->categoryRepository = $categoryRepository;
@@ -33,14 +33,14 @@ class UserServiceUpdate
     {
         $attributes = $request->all();
 
-        if (($attributes['user_type_id']) && $attributes['user_type_id']==2) {
-            if(empty($attributes['category_id'])){
+        if (($attributes['user_type_id']) && $attributes['user_type_id'] == 2) {
+            if (empty($attributes['category_id'])) {
                 return "The category_id field is required.";
             }
         }
 
-        if (($attributes['user_type_id']) && $attributes['user_type_id']==1) {
-            if($attributes['category_id']){
+        if (($attributes['user_type_id']) && $attributes['user_type_id'] == 1) {
+            if ($attributes['category_id']) {
                 return "Remove the field category_id.";
             }
         }
@@ -63,9 +63,19 @@ class UserServiceUpdate
         if (!get_object_vars($this->categoryRepository->show($attributes['category_id']))) {
             return "category_id invalid";
         }
-
+        if ($request->hasFile('image')) {
+            $image = $this->uploadImg($request->file('image'), $id);
+        }
+        $attributes['image'] = $image;
         $attributes['password'] = bcrypt($attributes['password']);
         return $this->userRepository->update($id, $attributes);
     }
+    public function uploadImg($file, $id)
+    {
+        if ($this->userRepository->show($id)->image) {
+            Storage::delete('public/' . $this->userRepository->show($id)->image);
+        }
 
+        return  $file->store('imagens/' . auth()->user()->cpf_cnpj, 'public');
+    }
 }

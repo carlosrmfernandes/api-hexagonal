@@ -21,8 +21,7 @@ class UserServiceRegistration
         UserRepository $userRepository,
         UserTypeRepository $userTypeRepository,
         CategoryRepository $categoryRepository
-    )
-    {
+    ) {
         $this->userRepository = $userRepository;
         $this->userTypeRepository = $userTypeRepository;
         $this->categoryRepository = $categoryRepository;
@@ -37,14 +36,14 @@ class UserServiceRegistration
             $attributes = $request;
         }
 
-        if (($attributes['user_type_id']) && $attributes['user_type_id']==2) {
-            if(empty($attributes['category_id'])){
+        if (($attributes['user_type_id']) && $attributes['user_type_id'] == 2) {
+            if (empty($attributes['category_id'])) {
                 return "The category_id field is required.";
             }
         }
 
-        if (($attributes['user_type_id']) && $attributes['user_type_id']==1) {
-            if(!empty($attributes['category_id'])){
+        if (($attributes['user_type_id']) && $attributes['user_type_id'] == 1) {
+            if (!empty($attributes['category_id'])) {
                 return "Remove the field category_id.";
             }
         }
@@ -54,24 +53,30 @@ class UserServiceRegistration
             return "cpf_cnpj invalid";
         }
 
-         $validator = Validator::make($attributes, $this->rules());
+        $validator = Validator::make($attributes, $this->rules());
 
-         if ($validator->fails()) {
-             return $validator->errors();
-         }
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
 
         if (!get_object_vars(($this->userTypeRepository->show($attributes['user_type_id'])))) {
             return "user_type_id invalid";
         }
-        if (($attributes['user_type_id']) && $attributes['user_type_id']==2) {
+        if (($attributes['user_type_id']) && $attributes['user_type_id'] == 2) {
             if (!get_object_vars($this->categoryRepository->show($attributes['category_id']))) {
                 return "category_id invalid";
             }
         }
-
         $attributes['password'] = bcrypt($attributes['password']);
+        if ($request->hasFile('image')) {
+            $image = $this->uploadImg($request->file('image'),$attributes['cpf_cnpj']);
+        }
+        $attributes['image'] = $image;
         $user = $this->userRepository->save($attributes);
-        return $user?$user:'unidentified user';
+        return $user ? $user : 'unidentified user';
     }
-
+    public function uploadImg($file,$cpf_cnpj)
+    {
+        return  $file->store('imagens/' . $cpf_cnpj, 'public');
+    }
 }

@@ -58,4 +58,11 @@ class CategoryRepository extends BaseRepository
                         ->first();
     }
 
+    public function categoryServiceWithEstablishment(int $id){
+        return (object) $this->obj
+                        ->with('users.category')
+                        ->where('id', $id)
+                        ->first();
+    }
+
 }

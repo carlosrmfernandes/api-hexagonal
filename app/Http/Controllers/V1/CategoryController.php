@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1;
 use Illuminate\Http\Request;
 use App\Service\V1\Category\CategoryServiceShow;
 use App\Service\V1\Category\CategoryServiceAll;
+use App\Service\V1\Category\CategoryServiceWithEstablishment;
 use App\Http\Controllers\Controller;
 
 
@@ -12,15 +13,18 @@ class CategoryController extends Controller
 {
     protected $categoryServiceShow;
     protected $categoryServiceAll;
+    protected $categoryServiceWithEstablishment;
 
     public function __construct(
 
         CategoryServiceShow $categoryServiceShow,
-        CategoryServiceAll $categoryServiceAll
+        CategoryServiceAll $categoryServiceAll,
+        CategoryServiceWithEstablishment $categoryServiceWithEstablishment
 
     ) {
         $this->categoryServiceShow = $categoryServiceShow;
         $this->categoryServiceAll = $categoryServiceAll;
+        $this->categoryServiceWithEstablishment = $categoryServiceWithEstablishment;
     }
 
     /**
@@ -43,7 +47,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-
     }
 
     /**
@@ -60,6 +63,20 @@ class CategoryController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function categoryWithEstablishment($id)
+    {
+
+        $categoryWithEstablishment = $this->categoryServiceWithEstablishment->categoryServiceWithEstablishment($id);
+
+        return response()->json(['data' => $categoryWithEstablishment]);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -68,7 +85,6 @@ class CategoryController extends Controller
      */
     public function update(int $id, Request $request)
     {
-
     }
 
     /**

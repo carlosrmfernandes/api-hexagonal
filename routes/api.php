@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::get('/', function () {
     echo "api rodando";
 });
@@ -32,7 +33,6 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
 
         Route::get('user-type/{id}', 'V1\\UserTypeController@show');
         Route::get('user-type', 'V1\\UserTypeController@index');
-
     });
 
     //Products
@@ -43,9 +43,10 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
     //Category
     Route::get('category', 'V1\\CategoryController@index');
     Route::get('category/{id}', 'V1\\CategoryController@show');
+    Route::get('category-establishment/{id}', 'V1\\CategoryController@categoryWithEstablishment');
 
     //Establishment
-    Route::get('establishment/{id}', 'V1\\EstablishmentController@show');
+    Route::get('establishment/{id}', 'V1\\EstablishmentController@showSubCategoryProduct');
     Route::get('establishment', 'V1\\EstablishmentController@index');
 
     //Delivery Order

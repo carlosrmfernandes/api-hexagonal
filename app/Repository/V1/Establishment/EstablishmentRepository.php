@@ -29,7 +29,7 @@ class EstablishmentRepository extends BaseRepository
     public function show(int $id): object
     {
         return (object) $this->obj
-                        ->with('product')
+                        ->with('product.subCategory')
                         ->where('id', $id)
                         ->first();
     }
