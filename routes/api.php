@@ -46,8 +46,8 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
     Route::get('category-establishment/{id}', 'V1\\CategoryController@categoryWithEstablishment');
 
     //Establishment
-    Route::get('establishment/{id}', 'V1\\EstablishmentController@showSubCategoryProduct');
-    Route::get('establishment', 'V1\\EstablishmentController@index');
+        Route::get('establishment/{id}', 'V1\\EstablishmentController@showSubCategoryWithProduct');
+        Route::get('establishment', 'V1\\EstablishmentController@index');
 
     //Delivery Order
     Route::post('delivery-order', 'V1\\DeliveryOrderController@store');

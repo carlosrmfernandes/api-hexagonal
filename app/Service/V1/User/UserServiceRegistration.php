@@ -71,7 +71,7 @@ class UserServiceRegistration
         if ($request->hasFile('image')) {
             $image = $this->uploadImg($request->file('image'),$attributes['cpf_cnpj']);
         }
-        $attributes['image'] = $image;
+        $attributes['image']= empty($image)?null:$image;
         $user = $this->userRepository->save($attributes);
         return $user ? $user : 'unidentified user';
     }

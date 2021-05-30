@@ -40,7 +40,7 @@ class UserServiceUpdate
         }
 
         if (($attributes['user_type_id']) && $attributes['user_type_id'] == 1) {
-            if ($attributes['category_id']) {
+            if (!empty($attributes['category_id'])) {
                 return "Remove the field category_id.";
             }
         }
@@ -60,13 +60,17 @@ class UserServiceUpdate
         if (!get_object_vars(($this->userTypeRepository->show($attributes['user_type_id'])))) {
             return "user_type_id invalid";
         }
-        if (!get_object_vars($this->categoryRepository->show($attributes['category_id']))) {
-            return "category_id invalid";
+
+        if (($attributes['user_type_id']) && $attributes['user_type_id'] == 2) {
+            if (!get_object_vars($this->categoryRepository->show($attributes['category_id']))) {
+                return "category_id invalid";
+            }
         }
+
         if ($request->hasFile('image')) {
             $image = $this->uploadImg($request->file('image'), $id);
         }
-        $attributes['image'] = $image;
+        $attributes['image']= empty($image)?null:$image;
         $attributes['password'] = bcrypt($attributes['password']);
         return $this->userRepository->update($id, $attributes);
     }

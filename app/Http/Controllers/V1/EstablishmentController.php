@@ -7,27 +7,27 @@ use App\Service\V1\Establishment\EstablishmentServiceShow;
 use App\Service\V1\Establishment\EstablishmentServiceAll;
 use App\Filters\V1\Establishment\EstablishmentFilters;
 use App\Http\Controllers\Controller;
-use App\Service\V1\Establishment\EstablishmentServiceShowSubCategory;
+use App\Service\V1\Establishment\EstablishmentServiceShowSubCategoryWithProduct;
 
 class EstablishmentController extends Controller
 {
     protected $establishmentServiceShow;
     protected $establishmentServiceAll;
     protected $establishmentFilters;
-    protected $establishmentServiceShowSubCategory;
+    protected $establishmentServiceShowSubCategoryWithProduct;
 
     public function __construct(
 
         EstablishmentServiceShow $establishmentServiceShow,
         EstablishmentServiceAll $establishmentServiceAll,
         EstablishmentFilters $establishmentFilters,
-        EstablishmentServiceShowSubCategory $establishmentServiceShowSubCategory
+        EstablishmentServiceShowSubCategoryWithProduct $establishmentServiceShowSubCategoryWithProduct
 
     ) {
         $this->establishmentServiceShow = $establishmentServiceShow;
         $this->establishmentServiceAll = $establishmentServiceAll;
         $this->establishmentFilters = $establishmentFilters;
-        $this->establishmentServiceShowSubCategory = $establishmentServiceShowSubCategory;
+        $this->establishmentServiceShowSubCategoryWithProduct = $establishmentServiceShowSubCategoryWithProduct;
     }
 
     /**
@@ -64,11 +64,11 @@ class EstablishmentController extends Controller
         return response()->json(['data' => $establishmentWithProduct]);
     }
 
-    public function showSubCategoryProduct($id)
+    public function showSubCategoryWithProduct($id)
     {
-        $establishmentSubCategoryProduct = $this->establishmentServiceShowSubCategory->showSubCategoryProduct($id);
+        $establishmentSubCategoryWithProduct = $this->establishmentServiceShowSubCategoryWithProduct->showSubCategoryWithProduct($id);
 
-        return response()->json(['data' => $establishmentSubCategoryProduct]);
+        return response()->json(['data' => $establishmentSubCategoryWithProduct]);
     }
 
     /**

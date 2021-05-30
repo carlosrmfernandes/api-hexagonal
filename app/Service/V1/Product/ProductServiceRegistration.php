@@ -57,7 +57,7 @@ class ProductServiceRegistration
         if ($request->hasFile('image')) {
              $image = $this->uploadImg($request->file('image'));
         }
-        $attributes['image']= $image;
+        $attributes['image']= empty($image)?null:$image;
         $product = $this->productRepository->save($attributes);
         return $product?$product:'unidentified product';
     }

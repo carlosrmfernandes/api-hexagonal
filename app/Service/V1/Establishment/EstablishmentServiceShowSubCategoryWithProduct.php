@@ -4,7 +4,7 @@ namespace App\Service\V1\Establishment;
 
 use App\Repository\V1\SubCategory\SubCategoryRepository;
 
-class EstablishmentServiceShowSubCategory
+class EstablishmentServiceShowSubCategoryWithProduct
 {
 
     protected $subCategoryRepository;
@@ -19,9 +19,9 @@ class EstablishmentServiceShowSubCategory
     {
         return $this->subCategoryRepository->show($id);
     }
-    public function showSubCategoryProduct(int $id)
+    public function showSubCategoryWithProduct(int $id)
     {
 
-        return $this->subCategoryRepository->showSubCategoryProduct($id);
+        return $this->subCategoryRepository->showSubCategoryWithProduct($id);
     }
 }

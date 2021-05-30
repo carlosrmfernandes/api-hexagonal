@@ -48,7 +48,7 @@ class ProductServiceUpdate
         if ($request->hasFile('image')) {
             $image = $this->uploadImg($request->file('image'), $id);
        }
-       $attributes['image']= $image;
+       $attributes['image']= empty($image)?null:$image;
 
         return $this->productRepository->update($id, $attributes);
     }

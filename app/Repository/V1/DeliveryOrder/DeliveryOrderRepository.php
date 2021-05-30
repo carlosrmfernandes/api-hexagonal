@@ -68,6 +68,7 @@ class DeliveryOrderRepository extends BaseRepository
         return (object) $this->obj
             ->with(['product.subCategory', 'product.user.category'])
             ->where('id', $id)
+            ->where('user_id', auth()->user()->id)
             ->first();
     }
 }
