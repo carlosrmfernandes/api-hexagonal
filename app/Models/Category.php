@@ -8,10 +8,10 @@ class Category extends Model
 {
     protected $table = 'categories';
     protected $fillable = [
-        'name', 'checked'
+        'name','background_color','sub_title','image','checked'
     ];
     protected $visible = [
-        'id', 'name', 'checked','subCategory','users'
+        'id','name','background_color','sub_title','image','checked','subCategory','users'
     ];
 
     public function subCategory(){
