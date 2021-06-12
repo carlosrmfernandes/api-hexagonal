@@ -48,6 +48,17 @@ class MercadoPagoCotroller extends Controller
     }
 
     /**
+     * storeCustomer a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storePayment(Request $request): object
+    {
+        return response()->json(['data' => app(ClientAuthorization::class)->createsPayment($request)]);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @return \Illuminate\Http\Response

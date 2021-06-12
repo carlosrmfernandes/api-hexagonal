@@ -53,16 +53,22 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
     Route::get('delivery-order', 'V1\\DeliveryOrderController@index');
     Route::get('delivery-order/{id}', 'V1\\DeliveryOrderController@show');
     Route::post('delivery-order/{id}', 'V1\\DeliveryOrderController@update');
+
+    //Customer
+    Route::get('customers/{id}', 'V1\\MercadoPagoCotroller@showCustomer');
+    Route::get('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@showCards');
+    Route::post('customers', 'V1\\MercadoPagoCotroller@storeCustomer');
+    Route::post('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@storeCard');
+    Route::delete('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@deleteCard');
+
+    //Payment
+    Route::post('payment', 'V1\\MercadoPagoCotroller@storePayment');
+
 });
 
 Route::group(['prefix' => ''], function ($router) {
     Route::post('user', 'V1\\UserController@store');
     Route::post('login', 'V1\\AuthController@login');
-    Route::post('customers', 'V1\\MercadoPagoCotroller@storeCustomer');
-    Route::post('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@storeCard');
-    Route::get('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@showCards');
-    Route::delete('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@deleteCard');
-    Route::get('customers/{id}', 'V1\\MercadoPagoCotroller@showCustomer');
     Route::get('example-weather/{id}', 'V1\\ExampleWeatherCotroller@show');
     Route::get('indetification-types', 'V1\\MercadoPagoCotroller@showIdentificationType');
 });

@@ -96,7 +96,7 @@ class Client
     }
 
     /**
-     * @param $request
+     * @param $request & &customerID
      * @return Object
      * @throws MercadoPagoException
      */
@@ -135,7 +135,7 @@ class Client
     }
 
     /**
-     * @param $request
+     * @param $customerID & $id
      * @return Object
      * @throws MercadoPagoException
      */
@@ -145,6 +145,26 @@ class Client
         try {
             return $this->mercadoPagoInterface->deleteCard(
                 $customerID, $id
+            );
+        } catch (Exception $exception) {
+            throw new MercadoPagoException(
+                $exception->getMessage(),
+                $exception->getCode()
+            );
+        }
+    }
+
+    /**
+     * @param $request
+     * @return Object
+     * @throws MercadoPagoException
+     */
+    public function createsPayment(
+        $request
+    ): Object {
+        try {
+            return $this->mercadoPagoInterface->createsPayment(
+                $request
             );
         } catch (Exception $exception) {
             throw new MercadoPagoException(

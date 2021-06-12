@@ -33,7 +33,6 @@ interface MercadoPagoInterface
         $id
     ): Object;
 
-
     /**
      * @param $request
      * @return Object
@@ -55,5 +54,13 @@ interface MercadoPagoInterface
      */
     public function deleteCard(
         $customerID, $id
+    ): Object;
+
+        /**
+     * @param $request
+     * @return Object
+     */
+    public function createsPayment(
+        $request
     ): Object;
 }

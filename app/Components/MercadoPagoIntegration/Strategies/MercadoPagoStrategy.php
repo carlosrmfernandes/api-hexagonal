@@ -154,7 +154,6 @@ class MercadoPagoStrategy implements MercadoPagoInterface
         }
     }
 
-
     /**
      * @param  $request
      * @return Object
@@ -241,6 +240,44 @@ class MercadoPagoStrategy implements MercadoPagoInterface
         } catch (ClientException $exception) {
             $response = json_decode($exception->getResponse()->getBody()->getContents());
 
+            throw new MercadoPagoException(
+            $response->message, $exception->getCode()
+            );
+        } catch (Exception $exception) {
+            throw $exception;
+        }
+    }
+
+    /**
+     * @param  $request
+     * @return Object
+     * @throws Exception
+     */
+    public function createsPayment(
+        $request
+    ): Object
+    {
+        $body = null;
+        $config = config('mercadopago');
+
+        try {
+
+            if (is_object($request)) {
+                $body = $request->all();
+            }
+
+            $response = $this->client->request('POST', '/v1/payments/', [
+                'json' => $body,
+                'headers' => [
+                    "Accept" => "application/json",
+                    "Content-Type" => "application/json",
+                    'Authorization' => 'Bearer ' . $config['mp_access_token']
+                ]
+            ]);
+            return (object) json_decode($response->getBody()->getContents());
+        } catch (ClientException $exception) {
+            $response = json_decode($exception->getResponse()->getBody()->getContents());
+            dd($response);
             throw new MercadoPagoException(
             $response->message, $exception->getCode()
             );
