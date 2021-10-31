@@ -20,7 +20,9 @@ class UserRepository extends BaseRepository
         try {
             $user = $this->obj->create($attributes);
             DB::commit();
-            return $user;
+            return $user->with(['userType','category'])
+                    ->where('id', $user->id)
+                    ->first();
         } catch (Exception $ex) {
             DB::rollback();
             return $ex->getMessage();
@@ -39,7 +41,9 @@ class UserRepository extends BaseRepository
             }
 
             DB::commit();
-            return (object) $user;
+            return (object) $user->with(['userType','category'])
+                            ->where('id', $user->id)
+                            ->first();
         } catch (Exception $ex) {
             DB::rollback();
             return $ex->getMessage();

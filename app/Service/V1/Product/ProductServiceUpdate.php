@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repository\V1\Product\ProductRepository;
 use App\Repository\V1\User\UserRepository;
 use Illuminate\Support\Facades\Storage;
+use App\Repository\V1\SubCategory\SubCategoryRepository;
 use Validator;
 
 class ProductServiceUpdate
@@ -15,14 +16,17 @@ class ProductServiceUpdate
 
     protected $userRepository;
     protected $productRepository;
+    protected $subCategoryRepository;
 
     public function __construct(
         UserRepository $userRepository,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        SubCategoryRepository $subCategoryRepository
     )
     {
         $this->userRepository = $userRepository;
         $this->productRepository = $productRepository;
+        $this->subCategoryRepository = $subCategoryRepository;
     }
 
     public function update(int $id, Request $request)
@@ -45,6 +49,10 @@ class ProductServiceUpdate
             return "user_id invalid";
         }
 
+        if (!($this->isValidCategoryAndSubCatecory($attributes['sub_category_id'],$attributes['user_id']))) {
+            return "sub_category_id invalid";
+        }
+
         if ($request->hasFile('image')) {
             $image = $this->uploadImg($request->file('image'), $id);
        }
@@ -60,6 +68,26 @@ class ProductServiceUpdate
         }
 
         return  $file->store('imagens/'.auth()->user()->cpf_cnpj, 'public');
+    }
+
+    public function isValidCategoryAndSubCatecory($subCategoryId,$userId)
+    {
+        $hasSubCatecory=false;
+        if($this->subCategoryRepository->show($subCategoryId)){
+            $userCategory = $this->userRepository->show($userId)->category_id;
+            if($userCategory){
+                if($this->subCategoryRepository->showSubcategory($userCategory)){
+                    foreach($this->subCategoryRepository->showSubcategory($userCategory) as $subCategory){
+                        if($subCategory->id==$subCategoryId){
+                            $hasSubCatecory=true;
+                            break;
+                        }
+                    }
+                }
+
+            }
+            return $hasSubCatecory;
+        }
     }
 
 }

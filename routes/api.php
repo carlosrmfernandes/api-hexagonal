@@ -44,6 +44,12 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
     Route::get('delivery-order', 'V1\\DeliveryOrderController@index');
     Route::get('delivery-order/{id}', 'V1\\DeliveryOrderController@show');
     Route::post('delivery-order/{id}', 'V1\\DeliveryOrderController@update');
+
+    //Notification
+    Route::get('notification', 'V1\\NotificationController@index');
+    Route::get('notification/{id}', 'V1\\NotificationController@show');
+    Route::get('notification-read-done', 'V1\\NotificationController@notificationReadDone');
+    Route::get('notification-read-not', 'V1\\NotificationController@notificationNotRead');
 });
 
 Route::group(['prefix' => ''], function ($router) {
@@ -62,5 +68,5 @@ Route::group(['prefix' => ''], function ($router) {
 
     //Establishment
     Route::get('establishment/{id}', 'V1\\EstablishmentController@showSubCategoryWithProduct');
-    Route::get('establishment', 'V1\\EstablishmentController@index');
+    Route::get('establishment-category/{id}', 'V1\\EstablishmentController@index');
 });

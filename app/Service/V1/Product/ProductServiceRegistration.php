@@ -5,7 +5,6 @@ namespace App\Service\V1\Product;
 use App\Repository\V1\Product\ProductRepository;
 use App\Repository\V1\User\UserRepository;
 use App\Repository\V1\SubCategory\SubCategoryRepository;
-use App\Repository\V1\Category\CategoryRepository;
 use Validator;
 
 class ProductServiceRegistration
@@ -20,14 +19,12 @@ class ProductServiceRegistration
     public function __construct(
         ProductRepository $productRepository,
         UserRepository $userRepository,
-        SubCategoryRepository $subCategoryRepository,
-        CategoryRepository $categoryRepository
+        SubCategoryRepository $subCategoryRepository
     )
     {
         $this->productRepository = $productRepository;
         $this->userRepository = $userRepository;
         $this->subCategoryRepository = $subCategoryRepository;
-        $this->categoryRepository = $categoryRepository;
     }
 
     public function store($request)

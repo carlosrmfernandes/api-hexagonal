@@ -15,9 +15,9 @@ class establishmentServiceAll
         $this->establishmentRepository = $establishmentRepository;
     }
 
-    public function all($searchQuery = null)
+    public function all($searchQuery = null, $categoryId= null)
     {
-        return $this->establishmentRepository->all($searchQuery);
+        return $this->establishmentRepository->all($searchQuery, $categoryId);
     }
 
 }

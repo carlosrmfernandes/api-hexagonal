@@ -6,7 +6,7 @@ use App\Repository\V1\Product\ProductRepository;
 use App\Repository\V1\User\UserRepository;
 use App\Repository\V1\DeliveryOrder\DeliveryOrderRepository;
 use App\Service\V1\Notification\DeliveryOrderServiceNotificationSeller;
-
+use Illuminate\Support\Facades\Log;
 use Validator;
 
 class DeliveryOrderRegistration
@@ -58,7 +58,6 @@ class DeliveryOrderRegistration
                     }
 
                     if ($orderOk) {
-                        $this->sellerId=$delivery_order['product_id'];
                         $delivery_order['status'] = 0;
                         $delivery_order['user_id'] = auth()->user()->id;
                         $this->deliveryOrdersDone[$key] = $delivery_order;

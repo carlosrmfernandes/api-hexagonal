@@ -12,29 +12,29 @@
  * @author carlosfernandes
  */
 
-namespace App\Filters\V1\Establishment;
+namespace App\Filters\V1\Notification;
 
-use App\Service\V1\Establishment\EstablishmentServiceAll;
+use App\Service\V1\Notification\NotificationServiceAll;
 
-class EstablishmentFilters
+class NotificationFilters
 {
 
     private $searchQuery;
-    private $establishmentServiceAll;
+    private $notificationServiceAll;
 
     public function __construct(
-        EstablishmentServiceAll $establishmentServiceAll
+        NotificationServiceAll $notificationServiceAll
     )
     {
-        $this->establishmentServiceAll = $establishmentServiceAll;
+        $this->notificationServiceAll = $notificationServiceAll;
     }
 
-    public function apply($request, $categoryId)
+    public function apply($request)
     {
         if (!empty($request['searchQuery'])) {
             $this->searchQuery = $request['searchQuery'];
         }
-        return $this->establishmentServiceAll->all($this->searchQuery, $categoryId);
+        return $this->notificationServiceAll->all($this->searchQuery);
     }
 
 }

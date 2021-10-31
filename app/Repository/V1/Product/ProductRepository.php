@@ -23,7 +23,9 @@ class ProductRepository extends BaseRepository
         try {
             $product = $this->obj->create($attributes);
             DB::commit();
-            return $product;
+            return $product->with(['subCategory.category'])
+                   ->where('id', $product->id)
+                   ->first();
         } catch (Exception $ex) {
             DB::rollback();
             return $ex->getMessage();
@@ -42,7 +44,9 @@ class ProductRepository extends BaseRepository
             }
 
             DB::commit();
-            return (object) $product;
+            return (object) $product->with(['subCategory.category'])
+                            ->where('id', $product->id)
+                            ->first();
         } catch (Exception $ex) {
             DB::rollback();
             return $ex->getMessage();

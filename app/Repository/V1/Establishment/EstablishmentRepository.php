@@ -13,16 +13,18 @@ class EstablishmentRepository extends BaseRepository
         parent::__construct($user);
     }
 
-    public function all($searchQuery = null): object
+    public function all($searchQuery = null, $categoryId = null): object
     {
         if ($searchQuery) {
             return $this->obj
-                            ->where('name', 'ilike', '%' . $searchQuery . '%')
+                            ->where('name', 'like', '%' . $searchQuery . '%')
                             ->where('user_type_id',2)
+                            ->where('category_id',$categoryId)
                             ->paginate(10);
         }
         return $this->obj
                         ->where('user_type_id',2)
+                        ->where('category_id',$categoryId)
                         ->paginate(10);
     }
 

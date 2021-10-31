@@ -35,9 +35,9 @@ class EstablishmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $categoryId)
     {
-        $establishment = $this->establishmentFilters->apply($request->all());
+        $establishment = $this->establishmentFilters->apply($request->all(), $categoryId);
         return response()->json(['data' => $establishment]);
     }
 
