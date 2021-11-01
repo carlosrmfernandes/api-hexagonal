@@ -10,7 +10,7 @@ class ExampleWeatherCotroller extends Controller
 {
     public function __construct()
     {
-        
+
     }
 
     /**
@@ -20,7 +20,7 @@ class ExampleWeatherCotroller extends Controller
      */
     public function index(Request $request)
     {
-        
+
     }
 
     /**
@@ -31,7 +31,7 @@ class ExampleWeatherCotroller extends Controller
      */
     public function store(Request $request): object
     {
-        
+
     }
 
     /**
@@ -41,8 +41,8 @@ class ExampleWeatherCotroller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {        
-        return response()->json(['data' => app(ClientAuthorization::class)->generateWeather($id)]);   
+    {
+        return response()->json(['data' => app(ClientAuthorization::class)->generateWeather($id)]);
     }
 
     /**
@@ -54,7 +54,7 @@ class ExampleWeatherCotroller extends Controller
      */
     public function update(int $id, Request $request)
     {
-        
+
     }
 
     /**
@@ -65,7 +65,7 @@ class ExampleWeatherCotroller extends Controller
      */
     public function destroy($id)
     {
-        
+
     }
 
 }
