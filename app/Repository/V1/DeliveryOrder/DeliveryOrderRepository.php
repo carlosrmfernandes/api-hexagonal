@@ -16,11 +16,12 @@ class DeliveryOrderRepository extends BaseRepository
     public function all($searchQuery = null): object
     {
         if ($searchQuery) {
-            return $this->obj->orWhereHas('product', function ($query) use ($searchQuery) {
-                $query->where('name', 'ilike', '%' . $searchQuery . '%')
-                    ->where('user_id', auth()->user()->id);
-            })
-                ->with(['product.subCategory', 'product.user.category'])
+            return $this->obj
+                ->with(['product.subCategory', 'product.user.category',
+                    'product'=>function ($query) use ($searchQuery) {
+                    $query->where('name', 'like', '%' . $searchQuery . '%');
+                }])
+                ->where('user_id', auth()->user()->id)
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }

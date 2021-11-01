@@ -5,7 +5,7 @@ namespace App\Http\Controllers\V1;
 use Illuminate\Http\Request;
 use App\Service\V1\Category\CategoryServiceShow;
 use App\Service\V1\Category\CategoryServiceAll;
-use App\Service\V1\Category\CategoryServiceWithEstablishment;
+use App\Filters\V1\CategoryEstablishment\CategoryEstablishmentFilters;
 use App\Http\Controllers\Controller;
 
 
@@ -19,12 +19,12 @@ class CategoryController extends Controller
 
         CategoryServiceShow $categoryServiceShow,
         CategoryServiceAll $categoryServiceAll,
-        CategoryServiceWithEstablishment $categoryServiceWithEstablishment
+        CategoryEstablishmentFilters $categoryEstablishmentFilters
 
     ) {
         $this->categoryServiceShow = $categoryServiceShow;
         $this->categoryServiceAll = $categoryServiceAll;
-        $this->categoryServiceWithEstablishment = $categoryServiceWithEstablishment;
+        $this->categoryEstablishmentFilters = $categoryEstablishmentFilters;
     }
 
     /**
@@ -34,9 +34,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categoryServiceAll = $this->categoryServiceAll->all();
+        $category = $this->categoryServiceAll->all();
 
-        return response()->json(['data' => $categoryServiceAll]);
+        return response()->json(['data' => $category]);
     }
 
     /**
@@ -68,10 +68,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function categoryWithEstablishment($id)
+    public function categoryWithEstablishment(Request $request, $id)
     {
-
-        $categoryWithEstablishment = $this->categoryServiceWithEstablishment->categoryServiceWithEstablishment($id);
+        $categoryWithEstablishment = $this->categoryEstablishmentFilters->apply($request->all(), $id);
 
         return response()->json(['data' => $categoryWithEstablishment]);
     }

@@ -15,20 +15,22 @@ class EstablishmentRepository extends BaseRepository
 
     public function all($searchQuery = null, $categoryId = null): object
     {
-        if ($searchQuery) {
             return $this->obj
-                            ->where('name', 'like', '%' . $searchQuery . '%')
+                            ->orWhere('name', 'like', '%' . $searchQuery . '%')
                             ->where('user_type_id',2)
-                            ->where('category_id',$categoryId)
                             ->paginate(10);
-        }
-        return $this->obj
-                        ->where('user_type_id',2)
-                        ->where('category_id',$categoryId)
-                        ->paginate(10);
+
     }
 
     public function show(int $id): object
+    {
+        return (object) $this->obj
+                        ->with('product.subCategory')
+                        ->where('id', $id)
+                        ->first();
+    }
+
+    public function establishmentWithProducts(int $id): object
     {
         return (object) $this->obj
                         ->with('product.subCategory')

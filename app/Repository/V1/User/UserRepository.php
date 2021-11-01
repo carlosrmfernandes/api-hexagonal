@@ -41,9 +41,7 @@ class UserRepository extends BaseRepository
             }
 
             DB::commit();
-            return (object) $user->with(['userType','category'])
-                            ->where('id', $user->id)
-                            ->first();
+            return (object) $user;
         } catch (Exception $ex) {
             DB::rollback();
             return $ex->getMessage();

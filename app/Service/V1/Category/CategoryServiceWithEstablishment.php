@@ -15,9 +15,9 @@ class CategoryServiceWithEstablishment
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function categoryServiceWithEstablishment(int $id)
+    public function categoryWithEstablishment(string $searchQuery = null ,int $id)
     {
-        return $this->categoryRepository->categoryServiceWithEstablishment($id);
+        return $this->categoryRepository->categoryWithEstablishment($searchQuery, $id);
     }
 
 }

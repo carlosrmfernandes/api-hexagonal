@@ -27,15 +27,4 @@ class SubCategoryRepository extends BaseRepository
             ->where('category_id', $id)
             ->get();
     }
-    public function showSubCategoryWithProduct(int $id)
-    {
-        return [
-            'establishment' => User::where('id', $id)->first(),
-            'data' => (object) $this->obj
-                ->with(['category', 'products',])
-                ->orWhereHas('products', function ($query) use ($id) {
-                    $query->where('user_id', $id);
-                })->get()
-        ];
-    }
 }

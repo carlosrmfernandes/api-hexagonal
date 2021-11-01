@@ -29,12 +29,12 @@ class EstablishmentFilters
         $this->establishmentServiceAll = $establishmentServiceAll;
     }
 
-    public function apply($request, $categoryId)
+    public function apply($request)
     {
         if (!empty($request['searchQuery'])) {
             $this->searchQuery = $request['searchQuery'];
         }
-        return $this->establishmentServiceAll->all($this->searchQuery, $categoryId);
+        return $this->establishmentServiceAll->all($this->searchQuery);
     }
 
 }
