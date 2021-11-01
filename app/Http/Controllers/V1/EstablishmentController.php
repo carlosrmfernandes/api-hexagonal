@@ -7,27 +7,31 @@ use App\Service\V1\Establishment\EstablishmentServiceShow;
 use App\Service\V1\Establishment\EstablishmentServiceAll;
 use App\Filters\V1\Establishment\EstablishmentFilters;
 use App\Http\Controllers\Controller;
-use App\Service\V1\Establishment\EstablishmentWithService;
+use App\Service\V1\Establishment\EstablishmentWithProductsService;
+use App\Service\V1\Establishment\EstablishmentServiceShowSubCategoryWithProduct;
 
 class EstablishmentController extends Controller
 {
     protected $establishmentServiceShow;
     protected $establishmentServiceAll;
     protected $establishmentFilters;
-    protected $establishmentWithService;
+    protected $establishmentWithProductsService;
+    protected $establishmentServiceShowSubCategoryWithProduct;
 
     public function __construct(
 
         EstablishmentServiceShow $establishmentServiceShow,
         EstablishmentServiceAll $establishmentServiceAll,
         EstablishmentFilters $establishmentFilters,
-        EstablishmentWithService $establishmentWithService
+        EstablishmentWithProductsService $establishmentWithProductsService,
+        EstablishmentServiceShowSubCategoryWithProduct $establishmentServiceShowSubCategoryWithProduct
 
     ) {
         $this->establishmentServiceShow = $establishmentServiceShow;
         $this->establishmentServiceAll = $establishmentServiceAll;
         $this->establishmentFilters = $establishmentFilters;
-        $this->establishmentWithService = $establishmentWithService;
+        $this->establishmentWithProductsService = $establishmentWithProductsService;
+        $this->establishmentServiceShowSubCategoryWithProduct = $establishmentServiceShowSubCategoryWithProduct;
     }
 
     /**
@@ -66,9 +70,16 @@ class EstablishmentController extends Controller
 
     public function establishmentWithProducts($id)
     {
-        $establishmentWithProducts = $this->establishmentWithService->establishmentWithProducts($id);
+        $establishmentWithProducts = $this->establishmentWithProductsService->establishmentWithProducts($id);
 
         return response()->json(['data' => $establishmentWithProducts]);
+    }
+
+    public function showSubCategoryWithProduct($id)
+    {
+        $establishmentSubCategoryWithProduct = $this->establishmentServiceShowSubCategoryWithProduct->showSubCategoryWithProduct($id);
+
+        return response()->json(['data' => $establishmentSubCategoryWithProduct]);
     }
 
     /**

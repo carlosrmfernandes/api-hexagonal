@@ -4,10 +4,10 @@ namespace App\Service\V1\Establishment;
 
 use App\Repository\V1\Establishment\EstablishmentRepository;
 
-class EstablishmentWithService
+class EstablishmentWithProductsService
 {
 
-    protected $subCategoryRepository;
+    protected $establishmentRepository;
 
     public function __construct(
         EstablishmentRepository $establishmentRepository

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repository\V1\SubCategory;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\SubCategory;
 use App\Models\User;
 use App\Repository\V1\BaseRepository;
@@ -27,4 +27,16 @@ class SubCategoryRepository extends BaseRepository
             ->where('category_id', $id)
             ->get();
     }
+
+    public function showSubCategoryWithProduct(int $id)
+     {
+         return [
+             'establishment' => User::where('id', $id)->first(),
+             'data' => (object) $this->obj
+                 ->with(['products'=> function($query) use ($id){
+                    $query->where('user_id', $id);
+                 }])
+                 ->get()
+         ];
+     }
 }

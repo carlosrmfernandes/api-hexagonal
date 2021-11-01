@@ -67,6 +67,7 @@ Route::group(['prefix' => ''], function ($router) {
     Route::get('product/{id}', 'V1\\ProductController@show');
 
     //Establishment
-    Route::get('establishment/{id}', 'V1\\EstablishmentController@establishmentWithProducts');
+    Route::get('establishment-products/{id}', 'V1\\EstablishmentController@establishmentWithProducts');
+    Route::get('establishment/{id}', 'V1\\EstablishmentController@showSubCategoryWithProduct');
     Route::get('establishment', 'V1\\EstablishmentController@index');
 });
