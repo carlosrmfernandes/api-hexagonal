@@ -36,18 +36,18 @@ class ProductServiceRegistration
         } else {
             $attributes = $request;
         }
-         $attributes['user_id']= auth()->user()->id;
+         $attributes['seller_id']= auth('api')->user()->id;
          $validator = Validator::make($attributes, $this->rules());
 
         if ($validator->fails()) {
              return $validator->errors();
         }
 
-        if (!get_object_vars(($this->userRepository->show($attributes['user_id'])))) {
-            return "user_id invalid";
+        if (!get_object_vars(($this->userRepository->show($attributes['seller_id'])))) {
+            return "seller_id invalid";
         }
 
-        if (!($this->isValidCategoryAndSubCatecory($attributes['sub_category_id'],$attributes['user_id']))) {
+        if (!($this->isValidCategoryAndSubCatecory($attributes['sub_category_id'],$attributes['seller_id']))) {
             return "sub_category_id invalid";
         }
 
@@ -60,7 +60,7 @@ class ProductServiceRegistration
     }
     public function uploadImg($file)
     {
-        return  $file->store('imagens/'.auth()->user()->cpf_cnpj, 'public');
+        return  $file->store('imagens/'.auth('api')->user()->cpf_cnpj, 'public');
     }
 
     public function isValidCategoryAndSubCatecory($subCategoryId,$userId)

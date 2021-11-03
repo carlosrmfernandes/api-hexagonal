@@ -58,7 +58,7 @@ class CategoryRepository extends BaseRepository
                         ->first();
     }
 
-    public function categoryWithEstablishment($searchQuery = null, int $id){
+    public function categoryWithSeller($searchQuery = null, int $id){
 
         return (object) $this->obj
                         ->with(['users.category','users'=>function($query) use ($searchQuery){

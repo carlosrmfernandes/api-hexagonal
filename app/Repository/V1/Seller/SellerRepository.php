@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Repository\V1\Establishment;
+namespace App\Repository\V1\Seller;
 
 use App\Models\User;
 use App\Repository\V1\BaseRepository;
 
-class EstablishmentRepository extends BaseRepository
+class SellerRepository extends BaseRepository
 {
 
     public function __construct(User $user)
@@ -30,7 +30,7 @@ class EstablishmentRepository extends BaseRepository
                         ->first();
     }
 
-    public function establishmentWithProducts(int $id): object
+    public function sellerWithProducts(int $id): object
     {
         return (object) $this->obj
                         ->with('product.subCategory')

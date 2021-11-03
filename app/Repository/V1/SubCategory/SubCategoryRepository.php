@@ -31,10 +31,10 @@ class SubCategoryRepository extends BaseRepository
     public function showSubCategoryWithProduct(int $id)
      {
          return [
-             'establishment' => User::where('id', $id)->first(),
+             'seller' => User::where('id', $id)->first(),
              'data' => (object) $this->obj
                  ->with(['products'=> function($query) use ($id){
-                    $query->where('user_id', $id);
+                    $query->where('seller_id', $id);
                  }])
                  ->get()
          ];

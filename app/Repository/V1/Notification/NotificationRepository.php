@@ -18,12 +18,12 @@ class NotificationRepository extends BaseRepository
     {
         if ($searchQuery) {
             return $this->obj
-                            ->where('notifiable_id',auth()->user()->id)
+                            ->where('notifiable_id',auth('api')->user()->id)
                             ->orderBy('created_at', 'desc')
                             ->paginate(10);
         }
         return $this->obj
-                        ->where('notifiable_id',auth()->user()->id)
+                        ->where('notifiable_id',auth('api')->user()->id)
                         ->orderBy('created_at', 'desc')
                         ->paginate(10);
     }
@@ -48,7 +48,7 @@ class NotificationRepository extends BaseRepository
 
     public function notificationNotRead():object
     {
-        $notification = $this->obj->where('notifiable_id', auth()->user()->id)
+        $notification = $this->obj->where('notifiable_id', auth('api')->user()->id)
             ->whereNull('read_at')
             ->paginate(10);
 
@@ -57,7 +57,7 @@ class NotificationRepository extends BaseRepository
 
     public function notificationReadDone():object
     {
-        $notification = $this->obj->where('notifiable_id', auth()->user()->id)
+        $notification = $this->obj->where('notifiable_id', auth('api')->user()->id)
             ->whereNotNull('read_at')
             ->paginate(10);
 

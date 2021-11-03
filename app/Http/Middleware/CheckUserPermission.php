@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CheckUserType
+class CheckUserPermission
 {
 
     /**
@@ -17,11 +17,9 @@ class CheckUserType
     public function handle($request, Closure $next)
     {
 
-
-        if (auth('api')->user()->user_type_id==2) {
-            return response()->json(['data' => 'sellers are not allowed to place an order']);
+        if (auth('api')->user()->id != $request->route()->parameter('id')) {
+            return response()->json(['data' => 'unidentified user']);
         }
-
         return $next($request);
     }
 

@@ -8,7 +8,7 @@ class DeliveryOrderServiceAll
 {
 
     protected $categoryRepository;
-
+    protected $userType;
     public function __construct(
         DeliveryOrderRepository $deliveryOrderRepository
     )
@@ -18,7 +18,13 @@ class DeliveryOrderServiceAll
 
     public function all($searchQuery = null)
     {
-        return $this->deliveryOrderRepository->all($searchQuery);
+
+        if(auth('api')->user()->user_type_id==1){
+            $this->userType = 'consumer_id';
+        }else{
+            $this->userType = 'seller_id';
+        }
+        return $this->deliveryOrderRepository->all($this->userType, $searchQuery);
     }
 
 }

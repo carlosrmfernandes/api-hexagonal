@@ -64,8 +64,9 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'apiJwt'=> \App\Http\Middleware\ApiProtectedRoute::class,
-        'checkUserType'=> \App\Http\Middleware\CheckUserType::class,
         'checkUser'=> \App\Http\Middleware\CheckUser::class,
+        'checkUserPermission'=> \App\Http\Middleware\CheckUserPermission::class,
+        'checkUserType'=> \App\Http\Middleware\CheckUserType::class,
         'blockRoute'=> \App\Http\Middleware\BlockRoute::class
     ];
 }

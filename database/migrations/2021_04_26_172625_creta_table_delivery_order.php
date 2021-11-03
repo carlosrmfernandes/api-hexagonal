@@ -20,8 +20,10 @@ class CretaTableDeliveryOrder extends Migration
             $table->integer('status')->nullable(); // 0 => Pending 1 => Received
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('consumer_id');
+            $table->foreign('consumer_id')->references('id')->on('users');
+            $table->unsignedBigInteger('seller_id');
+            $table->foreign('seller_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

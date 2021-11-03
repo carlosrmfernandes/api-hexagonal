@@ -34,7 +34,7 @@ class ProductServiceUpdate
         $image = null;
         $attributes = $request->all();
 
-        $attributes['user_id']= auth()->user()->id;
+        $attributes['seller_id']= auth('api')->user()->id;
         $validator = Validator::make($attributes, $this->rules($id));
 
         if ($validator->fails()) {
@@ -44,12 +44,15 @@ class ProductServiceUpdate
         if (!get_object_vars(($this->productRepository->show($id)))) {
             return "product invalid";
         }
-
-        if (!get_object_vars(($this->userRepository->show($attributes['user_id'])))) {
-            return "user_id invalid";
+        if ($this->productRepository->show($id)->seller_id != auth('api')->user()->id) {
+            return "product does not belong to this seller";
         }
 
-        if (!($this->isValidCategoryAndSubCatecory($attributes['sub_category_id'],$attributes['user_id']))) {
+        if (!get_object_vars(($this->userRepository->show($attributes['seller_id'])))) {
+            return "seller_id invalid";
+        }
+
+        if (!($this->isValidCategoryAndSubCatecory($attributes['sub_category_id'],$attributes['seller_id']))) {
             return "sub_category_id invalid";
         }
 
@@ -67,7 +70,7 @@ class ProductServiceUpdate
             Storage::delete('public/'.$this->productRepository->show($id)->image);
         }
 
-        return  $file->store('imagens/'.auth()->user()->cpf_cnpj, 'public');
+        return  $file->store('imagens/'.auth('api')->user()->cpf_cnpj, 'public');
     }
 
     public function isValidCategoryAndSubCatecory($subCategoryId,$userId)

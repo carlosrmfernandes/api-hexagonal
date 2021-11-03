@@ -12,29 +12,29 @@
  * @author carlosfernandes
  */
 
-namespace App\Filters\V1\Establishment;
+namespace App\Filters\V1\CategorySeller;
 
-use App\Service\V1\Establishment\EstablishmentServiceAll;
+use App\Service\V1\Category\CategoryServiceWithSeller;
 
-class EstablishmentFilters
+class CategorySellerFilters
 {
 
     private $searchQuery;
-    private $establishmentServiceAll;
+    private $categoryServiceWithSeller;
 
     public function __construct(
-        EstablishmentServiceAll $establishmentServiceAll
+        CategoryServiceWithSeller $categoryServiceWithSeller
     )
     {
-        $this->establishmentServiceAll = $establishmentServiceAll;
+        $this->categoryServiceWithSeller = $categoryServiceWithSeller;
     }
 
-    public function apply($request)
+    public function apply($request, $id)
     {
         if (!empty($request['searchQuery'])) {
             $this->searchQuery = $request['searchQuery'];
         }
-        return $this->establishmentServiceAll->all($this->searchQuery);
+        return $this->categoryServiceWithSeller->categoryWithSeller($this->searchQuery, $id);
     }
 
 }

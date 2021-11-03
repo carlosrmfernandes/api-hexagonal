@@ -5,7 +5,7 @@ namespace App\Http\Controllers\V1;
 use Illuminate\Http\Request;
 use App\Service\V1\Category\CategoryServiceShow;
 use App\Service\V1\Category\CategoryServiceAll;
-use App\Filters\V1\CategoryEstablishment\CategoryEstablishmentFilters;
+use App\Filters\V1\CategorySeller\CategorySellerFilters;
 use App\Http\Controllers\Controller;
 
 
@@ -13,18 +13,18 @@ class CategoryController extends Controller
 {
     protected $categoryServiceShow;
     protected $categoryServiceAll;
-    protected $categoryServiceWithEstablishment;
+    protected $categoryServiceWithSeller;
 
     public function __construct(
 
         CategoryServiceShow $categoryServiceShow,
         CategoryServiceAll $categoryServiceAll,
-        CategoryEstablishmentFilters $categoryEstablishmentFilters
+        CategorySellerFilters $categorySellerFilters
 
     ) {
         $this->categoryServiceShow = $categoryServiceShow;
         $this->categoryServiceAll = $categoryServiceAll;
-        $this->categoryEstablishmentFilters = $categoryEstablishmentFilters;
+        $this->categorySellerFilters = $categorySellerFilters;
     }
 
     /**
@@ -68,11 +68,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function categoryWithEstablishment(Request $request, $id)
+    public function categoryWithSeller(Request $request, $id)
     {
-        $categoryWithEstablishment = $this->categoryEstablishmentFilters->apply($request->all(), $id);
+        $categoryWithSeller = $this->categorySellerFilters->apply($request->all(), $id);
 
-        return response()->json(['data' => $categoryWithEstablishment]);
+        return response()->json(['data' => $categoryWithSeller]);
     }
 
     /**

@@ -80,6 +80,6 @@ class UserServiceUpdate
             Storage::delete('public/' . $this->userRepository->show($id)->image);
         }
 
-        return  $file->store('imagens/' . auth()->user()->cpf_cnpj, 'public');
+        return  $file->store('imagens/' . auth('api')->user()->cpf_cnpj, 'public');
     }
 }

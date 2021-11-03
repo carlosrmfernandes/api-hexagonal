@@ -8,6 +8,7 @@ class DeliveryOrderShow
 {
 
     protected $deliveryOrderRepository;
+    protected $userType;
 
     public function __construct(
         DeliveryOrderRepository $deliveryOrderRepository
@@ -18,7 +19,14 @@ class DeliveryOrderShow
 
     public function show(int $id)
     {
-        return $this->deliveryOrderRepository->show($id);
+        if(auth('api')->user()->user_type_id==1){
+            $this->userType = 'consumer_id';
+        }else{
+            $this->userType = 'seller_id';
+        }
+
+        return $this->deliveryOrderRepository->show($this->userType, $id);
     }
+
 
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Service\V1\Establishment;
+namespace App\Service\V1\Seller;
 
 use App\Repository\V1\SubCategory\SubCategoryRepository;
 
-class EstablishmentServiceShowSubCategoryWithProduct
+class SellerServiceShowSubCategoryWithProduct
 {
 
     protected $subCategoryRepository;

@@ -30,10 +30,13 @@ class DeliveryOrderUpdate
             return $validator->errors();
         }
 
-        if (!get_object_vars(($this->deliveryOrderRepository->show($id)))) {
-            return "delivery order invalid";
+        if (!get_object_vars(($this->deliveryOrderRepository->show('seller_id', $id)))) {
+            return "Order invalid";
         }
 
+        if (!get_object_vars(($this->deliveryOrderRepository->verifyOrderSeller($id, $attributes['product_id'])))){
+            return "Order does not belong to this seller";
+        }
         return $this->deliveryOrderRepository->update($id, $attributes);
     }
 }

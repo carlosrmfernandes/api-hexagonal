@@ -31,5 +31,6 @@ $factory->define(User::class, function (Faker $faker) {
         'email_verified_at' => now(),
         'remember_token' => Str::random(10),
         'user_type_id' => 2,
+        'category_id' => 3
     ];
 });

@@ -6,7 +6,6 @@ use App\Repository\V1\Product\ProductRepository;
 use App\Repository\V1\User\UserRepository;
 use App\Repository\V1\DeliveryOrder\DeliveryOrderRepository;
 use App\Service\V1\Notification\DeliveryOrderServiceNotificationSeller;
-use Illuminate\Support\Facades\Log;
 use Validator;
 
 class DeliveryOrderRegistration
@@ -59,12 +58,13 @@ class DeliveryOrderRegistration
 
                     if ($orderOk) {
                         $delivery_order['status'] = 0;
-                        $delivery_order['user_id'] = auth()->user()->id;
+                        $delivery_order['consumer_id'] = auth('api')->user()->id;
                         $this->deliveryOrdersDone[$key] = $delivery_order;
-                        $this->deliveryOrdersDone[$key]['order_user'] = auth()->user();
+                        $this->deliveryOrdersDone[$key]['order_user'] = auth('api')->user();
                         $this->deliveryOrdersDone[$key]['product'] = $this->productRepository
                             ->show($delivery_order['product_id']);
-                        $this->sellerId=$this->deliveryOrdersDone[$key]['product']->user_id;
+                        $this->sellerId=$this->deliveryOrdersDone[$key]['product']->seller_id;
+                        $delivery_order['seller_id'] = $this->sellerId;
                         $this->deliveryOrderRepository->save($delivery_order);
                     }
                 }

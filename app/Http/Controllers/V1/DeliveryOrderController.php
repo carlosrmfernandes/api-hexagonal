@@ -91,5 +91,7 @@ class DeliveryOrderController extends Controller
      */
     public function destroy($id)
     {
+
     }
+
 }

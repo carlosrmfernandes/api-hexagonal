@@ -18,10 +18,10 @@ Route::get('/', function () {
     echo "api rodando";
 });
 
-Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',], function ($router) {
+Route::group(['middleware' => ['apiJwt', 'checkUser'], 'prefix' => 'auth',], function ($router) {
 
     //User
-    Route::middleware(['checkUser'])->group(function () {
+    Route::middleware(['checkUserPermission'])->group(function () {
         Route::post('user/{id}', 'V1\\UserController@update');
         Route::get('user/{id}', 'V1\\UserController@show');
     });
@@ -39,11 +39,15 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
     Route::post('product', 'V1\\ProductController@store');
     Route::post('product/{id}', 'V1\\ProductController@update');
 
-    //Delivery Order
-    Route::post('delivery-order', 'V1\\DeliveryOrderController@store');
+    //Order
+    Route::middleware(['checkUserType'])->group(function () {
+        Route::post('delivery-order', 'V1\\DeliveryOrderController@store');
+    });
+
+    Route::post('delivery-order/{id}', 'V1\\DeliveryOrderController@update');
     Route::get('delivery-order', 'V1\\DeliveryOrderController@index');
     Route::get('delivery-order/{id}', 'V1\\DeliveryOrderController@show');
-    Route::post('delivery-order/{id}', 'V1\\DeliveryOrderController@update');
+    Route::get('order-seller/{id?}', 'V1\\DeliveryOrderController@showOrderSeller');
 
     //Notification
     Route::get('notification', 'V1\\NotificationController@index');
@@ -61,13 +65,13 @@ Route::group(['prefix' => ''], function ($router) {
     //Category
     Route::get('category', 'V1\\CategoryController@index');
     Route::get('category/{id}', 'V1\\CategoryController@show');
-    Route::get('category-establishment/{id}', 'V1\\CategoryController@categoryWithEstablishment');
+    Route::get('category-seller/{id}', 'V1\\CategoryController@categoryWithseller');
 
     //Products
     Route::get('product/{id}', 'V1\\ProductController@show');
 
-    //Establishment
-    Route::get('establishment-products/{id}', 'V1\\EstablishmentController@establishmentWithProducts');
-    Route::get('establishment/{id}', 'V1\\EstablishmentController@showSubCategoryWithProduct');
-    Route::get('establishment', 'V1\\EstablishmentController@index');
+    //Seller
+    Route::get('seller-products/{id}', 'V1\\SellerController@sellerWithProducts');
+    Route::get('seller/{id}', 'V1\\SellerController@showSubCategoryWithProduct');
+    Route::get('seller', 'V1\\SellerController@index');
 });
