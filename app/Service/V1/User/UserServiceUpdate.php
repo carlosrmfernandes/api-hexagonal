@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repository\V1\User\UserRepository;
 use App\Repository\V1\Category\CategoryRepository;
 use App\Repository\V1\UserType\UserTypeRepository;
+use App\Repository\V1\Address\AddressRepository;
 use Illuminate\Support\Facades\Storage;
 use function bcrypt;
 use Validator;
@@ -18,15 +19,18 @@ class UserServiceUpdate
 
     protected $userRepository;
     protected $userTypeRepository;
+    protected $addressRepository;
 
     public function __construct(
         UserRepository $userRepository,
         UserTypeRepository $userTypeRepository,
-        CategoryRepository $categoryRepository
+        CategoryRepository $categoryRepository,
+        AddressRepository $addressRepository
     ) {
         $this->userRepository = $userRepository;
         $this->userTypeRepository = $userTypeRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->addressRepository = $addressRepository;
     }
 
     public function update(int $id, Request $request)
@@ -72,7 +76,13 @@ class UserServiceUpdate
         }
         $attributes['image']= empty($image)?null:$image;
         $attributes['password'] = bcrypt($attributes['password']);
-        return $this->userRepository->update($id, $attributes);
+        
+        $addres = $this->addressRepository->update(auth('api')->user()->address_id, $attributes);
+        
+        if ($addres) {
+           return $this->userRepository->update($id, $attributes);
+        } 
+        return 'unidentified addres';
     }
     public function uploadImg($file, $id)
     {

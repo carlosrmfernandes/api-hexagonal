@@ -5,30 +5,32 @@ namespace App\Service\V1\User;
 use App\Repository\V1\User\UserRepository;
 use App\Repository\V1\UserType\UserTypeRepository;
 use App\Repository\V1\Category\CategoryRepository;
+use App\Repository\V1\Address\AddressRepository;
 use function bcrypt;
 use Validator;
 
-class UserServiceRegistration
-{
+class UserServiceRegistration {
 
     use Traits\RuleTrait;
     use \App\Service\Traits\VerifyCnpjOrCpfTrait;
 
     protected $userRepositor;
     protected $userTypeRepository;
+    protected $addressRepository;
 
     public function __construct(
-        UserRepository $userRepository,
-        UserTypeRepository $userTypeRepository,
-        CategoryRepository $categoryRepository
+            UserRepository $userRepository, 
+            UserTypeRepository $userTypeRepository, 
+            CategoryRepository $categoryRepository, 
+            AddressRepository $addressRepository
     ) {
         $this->userRepository = $userRepository;
         $this->userTypeRepository = $userTypeRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->addressRepository = $addressRepository;
     }
 
-    public function store($request)
-    {
+    public function store($request) {
         $attributes = null;
         if (is_object($request)) {
             $attributes = $request->all();
@@ -69,14 +71,20 @@ class UserServiceRegistration
         }
         $attributes['password'] = bcrypt($attributes['password']);
         if ($request->hasFile('image')) {
-            $image = $this->uploadImg($request->file('image'),$attributes['cpf_cnpj']);
+            $image = $this->uploadImg($request->file('image'), $attributes['cpf_cnpj']);
         }
-        $attributes['image']= empty($image)?null:$image;
-        $user = $this->userRepository->save($attributes);
-        return $user ? $user : 'unidentified user';
+        $attributes['image'] = empty($image) ? null : $image;
+        $addres = $this->addressRepository->save($attributes);
+        if ($addres) {
+            $attributes['address_id'] = $addres->id;
+            $user = $this->userRepository->save($attributes);
+            return $user ? $user : 'unidentified user';
+        }
+        return $user ? $user : 'unidentified addres';
     }
-    public function uploadImg($file,$cpf_cnpj)
-    {
-        return  $file->store('imagens/' . $cpf_cnpj, 'public');
+
+    public function uploadImg($file, $cpf_cnpj) {
+        return $file->store('imagens/' . $cpf_cnpj, 'public');
     }
+
 }

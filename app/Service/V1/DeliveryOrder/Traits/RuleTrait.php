@@ -22,7 +22,12 @@ trait RuleTrait
             'status' => 'required|boolean|max:1',
             'product_id' => 'required|integer',
             'quantity' => 'required|integer',
-            'delivery_address' => 'required|string|max:255',
+            'cep' => 'required|string',
+            'city' => 'required|string',
+            'neighborhood' => 'required|string',
+            'street' => 'required|string',
+            'street_number' => 'required|string',
+            'complement' => 'required|string',
         ];
     }
 }

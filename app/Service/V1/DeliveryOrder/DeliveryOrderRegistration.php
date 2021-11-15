@@ -49,11 +49,15 @@ class DeliveryOrderRegistration
                         return "product_id invalid";
                     }
                     if (
-                        $delivery_order['quantity'] == '' ||
-                        $delivery_order['quantity'] < 1 ||
-                        $delivery_order['delivery_address'] == ''
+                        $delivery_order['quantity'] < 1 ||                        
+                        $delivery_order['cep'] == '' ||
+                        $delivery_order['city'] == '' ||
+                        $delivery_order['neighborhood'] == '' ||
+                        $delivery_order['street'] == '' ||
+                        $delivery_order['street_number'] == '' ||
+                        $delivery_order['complement'] == '' 
                     ) {
-                        return "invalid quantity, delivery_address or price";
+                        return "invalid quantity, cep, city, neighborhood, street, street_number or complement";
                     }
 
                     if ($orderOk) {

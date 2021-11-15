@@ -10,6 +10,7 @@ namespace App\Service\V1\Notification;
 
 use App\Models\User;
 use App\Jobs\JobDeliveryOrderNotificationSeller;
+use App\Events\DeliveryOrderSellerEvent;
 
 class DeliveryOrderServiceNotificationSeller
 {
@@ -25,6 +26,9 @@ class DeliveryOrderServiceNotificationSeller
 
     public function notification()
     {
+        
+        broadcast(new DeliveryOrderSellerEvent($this->sellerId, $this->deliveryOrder));
+
         $seller = User::find($this->sellerId);
         if($seller){
             JobDeliveryOrderNotificationSeller::dispatch($seller, $this->deliveryOrder)
