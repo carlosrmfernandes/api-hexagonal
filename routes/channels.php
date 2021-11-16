@@ -20,3 +20,7 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 Broadcast::channel('channel-delivery-order-seller.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('channel-consumer-order-delivery-status.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
+});

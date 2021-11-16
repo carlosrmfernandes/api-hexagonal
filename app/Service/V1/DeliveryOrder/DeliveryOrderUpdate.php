@@ -3,6 +3,7 @@
 namespace App\Service\V1\DeliveryOrder;
 
 use App\Repository\V1\DeliveryOrder\DeliveryOrderRepository;
+use App\Events\ConsumerOrderDeliveryStatusEvent;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -36,7 +37,14 @@ class DeliveryOrderUpdate
 
         if (!get_object_vars(($this->deliveryOrderRepository->verifyOrderSeller($id, $attributes['product_id'])))){
             return "Order does not belong to this seller";
-        }
-        return $this->deliveryOrderRepository->update($id, $attributes);
+        }        
+        $deliveryOrder = $this->deliveryOrderRepository->update($id, $attributes);
+        
+        if($deliveryOrder){         
+         broadcast(new ConsumerOrderDeliveryStatusEvent($deliveryOrder->consumer_id, $deliveryOrder));
+         return $deliveryOrder;         
+        }        
+        
+        return "Order invalid";
     }
 }

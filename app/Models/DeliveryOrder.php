@@ -11,7 +11,7 @@ class DeliveryOrder extends Model
         'product_id', 'quantity', 'price','status','cep','city','neighborhood','street','street_number','complement','consumer_id','seller_id'
     ];
     protected $visible = [
-        'id', 'product_id', 'quantity', 'price','status','cep','city','neighborhood','street','street_number','complement','consumer_id','seller_id'
+        'id', 'product_id', 'quantity', 'price','status','cep','city','neighborhood','street','street_number','complement','consumer_id','seller_id','product' 
     ];
 
     public function product()
