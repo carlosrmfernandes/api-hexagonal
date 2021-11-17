@@ -6,11 +6,13 @@ use App\Service\V1\User\UserServiceRegistration;
 use App\Repository\V1\User\UserRepository;
 use App\Repository\V1\UserType\UserTypeRepository;
 use App\Repository\V1\Category\CategoryRepository;
+use App\Repository\V1\Address\AddressRepository;
 use App\Models\User;
 use App\Models\UserType;
 use App\Models\Category;
+use App\Models\Address;
 use Tests\TestCase;
-use Illuminate\Support\Str;
+
 class UserTest extends TestCase {
 
     /**
@@ -23,39 +25,42 @@ class UserTest extends TestCase {
 
     function test_create() {
         $attributes = [
-            'name' => "Hope",
-            'cpf_cnpj' => '35089173044',
-            'email' => 'support@hopetecno.com',
+            'name' => "Drogaria Sao paulo",
+            'cpf_cnpj' => '22.525.423/0001-68',
+            'email' => 'sp@sp.com',
             'phone' => '48996684418',
+            'cep' => '03704020',
             'state' => 'São Paulo',
-            'city' => 'Penha',
-            'address' => 'Rua Henrique Casela, 54 - Penha de França, São Paulo - SP, Brazil',
-            'is_active' => 1,
+            'city' => 'São Paulo',
+            'neighborhood' => 'Penha',
+            'street' => 'Rua henrrique casela',
+            'street_number' => 54,
+            'complement' => 'Chaparral',
             'password' => bcrypt(123456),
-            'company_name' => 'Hope',
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
+            'company_name' => 'Drogaria Sao paulo',
+            'image' => null,
             'user_type_id' => 2,
-            'category_id' => 1
+            'is_active' => 1,
+            'category_id' => 2,
+            
         ];
 
 
-       $UserRepository = new UserRepository(new User());
-       $userTypeRepository = new UserTypeRepository(new UserType());
-       $categoryRepository = new CategoryRepository(new Category());
+        $UserRepository = new UserRepository(new User());
+        $userTypeRepository = new UserTypeRepository(new UserType());
+        $categoryRepository = new CategoryRepository(new Category());
+        $addressRepository = new AddressRepository(new Address());
 
-       $userRepository = new UserServiceRegistration(
-           $UserRepository,$userTypeRepository,$categoryRepository
+        $userServiceRegistration = new UserServiceRegistration(
+                $UserRepository, 
+                $userTypeRepository, 
+                $categoryRepository,
+                $addressRepository
         );
-       $user = $userRepository->store($attributes);
-        if (is_object($user)) {
-            $expceted = User::find($user->id);
-            $this->assertEquals($expceted->id, $user->id);
-        } else {
-            dd($user);
-        }
+        $user = $userServiceRegistration->store($attributes);
+        
+        $expceted = User::find($user->id);
+        $this->assertEquals($expceted->id, $user->id);        
     }
-
-
 
 }

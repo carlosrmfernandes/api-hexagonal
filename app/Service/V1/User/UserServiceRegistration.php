@@ -69,11 +69,14 @@ class UserServiceRegistration {
                 return "category_id invalid";
             }
         }
-        $attributes['password'] = bcrypt($attributes['password']);
-        if ($request->hasFile('image')) {
+        $attributes['password'] = bcrypt($attributes['password']);        
+        
+        if ($attributes['image'] && $request->hasFile('image')) {
             $image = $this->uploadImg($request->file('image'), $attributes['cpf_cnpj']);
         }
+        
         $attributes['image'] = empty($image) ? null : $image;
+        
         $addres = $this->addressRepository->save($attributes);
         if ($addres) {
             $attributes['address_id'] = $addres->id;
