@@ -19,15 +19,14 @@ trait RuleTrait
     public function rules($id = null)
     {
         return [
-            'status' => 'required|boolean|max:1',
             'product_id' => 'required|integer',
             'quantity' => 'required|integer',
             'cep' => 'required|string',
             'city' => 'required|string',
             'neighborhood' => 'required|string',
             'street' => 'required|string',
-            'street_number' => 'required|string',
-            'complement' => 'required|string',
+            'street_number' => 'required|integer',
+            'complement' => 'required|string',            
         ];
     }
 }

@@ -8,8 +8,7 @@ use App\Repository\V1\DeliveryOrder\DeliveryOrderRepository;
 use App\Service\V1\Notification\DeliveryOrderServiceNotificationSeller;
 use Validator;
 
-class DeliveryOrderRegistration
-{
+class DeliveryOrderRegistration {
 
     use Traits\RuleTrait;
 
@@ -23,17 +22,15 @@ class DeliveryOrderRegistration
 
     public function __construct(
         ProductRepository $productRepository,
-        UserRepository $userRepository,
+        UserRepository $userRepository, 
         DeliveryOrderRepository $deliveryOrderRepository
-
     ) {
         $this->productRepository = $productRepository;
         $this->userRepository = $userRepository;
         $this->deliveryOrderRepository = $deliveryOrderRepository;
     }
 
-    public function store($request, $orderOk = false)
-    {
+    public function store($request, $orderOk = false) {
         $deliveryOrders = null;
         if (is_object($request)) {
             $deliveryOrders = $request->all();
@@ -44,30 +41,23 @@ class DeliveryOrderRegistration
         if ($deliveryOrders) {
             $orderEverythingOk = true;
             foreach ($deliveryOrders as $deliveryOrder) {
-                foreach ($deliveryOrder as $key=>$delivery_order) {
+                foreach ($deliveryOrder as $key => $delivery_order) {
                     if (!get_object_vars(($this->productRepository->show($delivery_order['product_id'])))) {
                         return "product_id invalid";
                     }
-                    if (
-                        $delivery_order['quantity'] < 1 ||                        
-                        $delivery_order['cep'] == '' ||
-                        $delivery_order['city'] == '' ||
-                        $delivery_order['neighborhood'] == '' ||
-                        $delivery_order['street'] == '' ||
-                        $delivery_order['street_number'] == '' ||
-                        $delivery_order['complement'] == '' 
-                    ) {
-                        return "invalid quantity, cep, city, neighborhood, street, street_number or complement";
+                    $validator = Validator::make($delivery_order, $this->rules());
+                    if ($validator->fails()) {
+                        return $validator->errors();
                     }
-
+                    
                     if ($orderOk) {
                         $delivery_order['status'] = 0;
                         $delivery_order['consumer_id'] = auth('api')->user()->id;
                         $this->deliveryOrdersDone[$key] = $delivery_order;
                         $this->deliveryOrdersDone[$key]['order_user'] = auth('api')->user();
                         $this->deliveryOrdersDone[$key]['product'] = $this->productRepository
-                            ->show($delivery_order['product_id']);
-                        $this->sellerId=$this->deliveryOrdersDone[$key]['product']->seller_id;
+                                ->show($delivery_order['product_id']);
+                        $this->sellerId = $this->deliveryOrdersDone[$key]['product']->seller_id;
                         $delivery_order['seller_id'] = $this->sellerId;
                         $this->deliveryOrderRepository->save($delivery_order);
                     }
@@ -84,11 +74,10 @@ class DeliveryOrderRegistration
         return 'delivery orders done';
     }
 
-    function deliveryOrderServiceNotificationSeller()
-    {
+    function deliveryOrderServiceNotificationSeller() {       
         (new DeliveryOrderServiceNotificationSeller(
-            $this->deliveryOrdersDone,
-            $this->sellerId
+        $this->deliveryOrdersDone, $this->sellerId
         ))->notification();
     }
+
 }
