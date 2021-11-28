@@ -21,11 +21,11 @@ class ConsumerOrderDeliveryStatusEvent implements ShouldBroadcast
      */
     protected $orderNewStatus;
     protected $userId;
-    
+
     public function __construct($userId, $orderNewStatus)
-    {        
+    {
         $this->orderNewStatus = $orderNewStatus;
-        $this->userId = $userId;        
+        $this->userId = $userId;
 
     }
 
@@ -36,9 +36,9 @@ class ConsumerOrderDeliveryStatusEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('channel-consumer-order-delivery-status.'.$this->userId);         
+        return new Channel('channel-consumer-order-delivery-status'.$this->userId);
     }
-    
+
     public function broadcastAs()
     {
         return 'ConsumerOrderDeliveryStatusEvent';

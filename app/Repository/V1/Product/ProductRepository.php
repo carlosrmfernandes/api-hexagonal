@@ -56,7 +56,7 @@ class ProductRepository extends BaseRepository
     public function show(int $id): object
     {
         return (object) $this->obj
-                        ->with(['subCategory.category','user'])
+                        ->with(['subCategory.category','user','user.address'])
                         ->where('id', $id)
                         ->first();
     }

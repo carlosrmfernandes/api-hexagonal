@@ -16,6 +16,7 @@ class SellerRepository extends BaseRepository
     public function all($searchQuery = null, $categoryId = null): object
     {
             return $this->obj
+                            ->with('address')
                             ->orWhere('name', 'like', '%' . $searchQuery . '%')
                             ->where('user_type_id',2)
                             ->paginate(10);
@@ -25,7 +26,7 @@ class SellerRepository extends BaseRepository
     public function show(int $id): object
     {
         return (object) $this->obj
-                        ->with('product.subCategory')
+                        ->with(['address','product.subCategory'])
                         ->where('id', $id)
                         ->first();
     }
@@ -33,7 +34,7 @@ class SellerRepository extends BaseRepository
     public function sellerWithProducts(int $id): object
     {
         return (object) $this->obj
-                        ->with('product.subCategory')
+                        ->with(['address','product.subCategory'])
                         ->where('id', $id)
                         ->first();
     }

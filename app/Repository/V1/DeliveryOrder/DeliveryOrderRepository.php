@@ -17,7 +17,7 @@ class DeliveryOrderRepository extends BaseRepository
     {
         if ($searchQuery) {
             return $this->obj
-                ->with(['product.subCategory', 'product.user.category',
+                ->with(['product.subCategory', 'product.user.category','product.user.address',
                     'product'=>function ($query) use ($searchQuery) {
                     $query->where('name', 'like', '%' . $searchQuery . '%');
                 }])
@@ -27,7 +27,7 @@ class DeliveryOrderRepository extends BaseRepository
         }
 
         return $this->obj
-            ->with(['product.subCategory', 'product.user.category'])
+            ->with(['product.subCategory', 'product.user.category','product.user.address',])
             ->where("$user_type", auth('api')->user()->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
@@ -58,7 +58,7 @@ class DeliveryOrderRepository extends BaseRepository
 
             DB::commit();
             return (object) $deliveryOrder
-                    ->with(['product', 'product.user'])
+                    ->with(['product', 'product.user','product.user.address'])
                     ->where('id', $id)
                     ->where('seller_id', auth('api')->user()->id)
                     ->first();
