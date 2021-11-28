@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    echo "api rodando";
+    return "api rodando";
 });
 
 Route::group(['middleware' => ['apiJwt', 'checkUser'], 'prefix' => 'auth',], function ($router) {

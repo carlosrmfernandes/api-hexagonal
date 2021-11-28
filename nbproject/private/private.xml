@@ -4,12 +4,26 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/routes/api.php</file>
-            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/.env</file>
-            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/routes/channels.php</file>
-            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/Product/ProductServiceUpdate.php</file>
-            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/config/app.php</file>
-            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Controllers/V1/ExampleWeatherCotroller.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/Product/ProductServiceRegistration.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/tests/Unit/ExampleTest.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Controllers/V1/UserController.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/config/auth.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/database/factories/ProductFactory.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Repository/V1/Product/ProductRepository.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/tests/Unit/Services/UserTest.php</file>
             <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Controllers/V1/ProductController.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/database/seeds/DatabaseSeeder.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Repository/V1/User/UserRepository.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/database/seeds/UserForTestSeeder.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/tests/Feature/ExampleTest.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/.env</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/tests/Unit/Register/UserTest.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/tests/Unit/Register/ProductTest.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/config/app.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/User/UserServiceLogin.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/tests/Feature/UserTest.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/User/UserServiceRegistration.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Repository/V1/BaseRepository.php</file>
         </group>
     </open-files>
 </project-private>

@@ -28,15 +28,16 @@ class ProductServiceRegistration
     }
 
     public function store($request)
-    {
+    {       
         $attributes = null;
-        $image = null;
         if (is_object($request)) {
             $attributes = $request->all();
         } else {
             $attributes = $request;
         }
+        
          $attributes['seller_id']= auth('api')->user()->id;
+         
          $validator = Validator::make($attributes, $this->rules());
 
         if ($validator->fails()) {
@@ -51,7 +52,7 @@ class ProductServiceRegistration
             return "sub_category_id invalid";
         }
 
-        if ($request->hasFile('image')) {
+        if (!empty($attributes['image']) && $request->hasFile('image')) {
              $image = $this->uploadImg($request->file('image'));
         }
         $attributes['image']= empty($image)?null:$image;

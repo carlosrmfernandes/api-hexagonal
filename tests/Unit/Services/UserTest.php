@@ -25,9 +25,9 @@ class UserTest extends TestCase {
 
     function test_create() {
         $attributes = [
-            'name' => "Drogaria Sao paulo",
-            'cpf_cnpj' => '22.525.423/0001-68',
-            'email' => 'sp@sp.com',
+            'name' => "Drogaria Sao paulo 2",
+            'cpf_cnpj' => '57.972.738/0001-38',
+            'email' => 'sp22@sp.com',
             'phone' => '48996684418',
             'cep' => '03704020',
             'state' => 'São Paulo',
@@ -59,8 +59,9 @@ class UserTest extends TestCase {
         );
         $user = $userServiceRegistration->store($attributes);
         
-        $expceted = User::find($user->id);
-        $this->assertEquals($expceted->id, $user->id);        
+//        $this->assertEquals($user->getMessageBag()->getMessages()['cpf_cnpj'][0], 'The cpf cnpj has already been taken.');        
+         $expceted = User::find($user->id);
+         $this->assertEquals($expceted->id, $user->id);        
     }
 
 }

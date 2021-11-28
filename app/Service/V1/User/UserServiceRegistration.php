@@ -37,7 +37,7 @@ class UserServiceRegistration {
         } else {
             $attributes = $request;
         }
-
+        
         if (($attributes['user_type_id']) && $attributes['user_type_id'] == 2) {
             if (empty($attributes['category_id'])) {
                 return "The category_id field is required.";
@@ -71,7 +71,7 @@ class UserServiceRegistration {
         }
         $attributes['password'] = bcrypt($attributes['password']);        
         
-        if ($attributes['image'] && $request->hasFile('image')) {
+        if (!empty($attributes['image']) && $request->hasFile('image')) {
             $image = $this->uploadImg($request->file('image'), $attributes['cpf_cnpj']);
         }
         
