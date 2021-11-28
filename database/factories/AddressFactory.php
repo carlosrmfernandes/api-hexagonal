@@ -16,13 +16,13 @@ use Illuminate\Support\Str;
   |
  */
 
-$factory->define(Address::class,  function (Faker $faker) {    
-    
+$factory->define(Address::class,  function (Faker $faker) {
+
     return [
         'cep' => '03704020',
         'state' => 'São Paulo',
         'city' => $faker->city(),
-        'neighborhood' => 'Penha',        
+        'neighborhood' => 'Penha',
         'street' => $faker->streetName(),
         'street_number' => $faker->numberBetween(10, 100),
         'complement' => 'Chaparral'
