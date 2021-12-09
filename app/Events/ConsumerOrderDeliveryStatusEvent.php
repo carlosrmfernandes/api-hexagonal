@@ -36,7 +36,7 @@ class ConsumerOrderDeliveryStatusEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('channel-consumer-order-delivery-status'.$this->userId);
+        return new Channel('channel-consumer-order-delivery-status.'.$this->userId);
     }
 
     public function broadcastAs()
