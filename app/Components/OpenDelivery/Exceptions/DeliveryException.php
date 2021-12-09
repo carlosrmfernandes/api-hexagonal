@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\Delivery\Exceptions;
+namespace App\Components\OpenDelivery\Exceptions;
 
 use Exception;
 use Throwable;

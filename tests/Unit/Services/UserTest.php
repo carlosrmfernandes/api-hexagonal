@@ -34,7 +34,7 @@ class UserTest extends TestCase {
             'city' => 'São Paulo',
             'neighborhood' => 'Penha',
             'street' => 'Rua henrrique casela',
-            'street_number' => 54,
+            'street_number' => "54",
             'complement' => 'Chaparral',
             'password' => bcrypt(123456),
             'company_name' => 'Drogaria Sao paulo',

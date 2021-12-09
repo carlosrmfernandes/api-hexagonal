@@ -7,8 +7,9 @@ use App\Repository\V1\DeliveryOrder\DeliveryOrderRepository;
 class DeliveryOrderServiceAll
 {
 
-    protected $categoryRepository;
+    protected $deliveryOrderRepository;
     protected $userType;
+    
     public function __construct(
         DeliveryOrderRepository $deliveryOrderRepository
     )

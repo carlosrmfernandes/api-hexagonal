@@ -8,6 +8,7 @@ use App\Repository\V1\Category\CategoryRepository;
 use App\Repository\V1\UserType\UserTypeRepository;
 use App\Repository\V1\Address\AddressRepository;
 use Illuminate\Support\Facades\Storage;
+use App\Components\AddressByZipCode\Client as ClientAuthorizationAddressByZipCode;
 use function bcrypt;
 use Validator;
 
@@ -74,6 +75,18 @@ class UserServiceUpdate
         if ($request->hasFile('image')) {
             $image = $this->uploadImg($request->file('image'), $id);
         }
+        
+        $addressByZipCode = app(ClientAuthorizationAddressByZipCode::class)->addressByZipCode($attributes['cep']);
+
+        if (!$addressByZipCode) {
+            return (object) "error looking up address via zip code";
+        }
+        
+        $attributes['state'] = $addressByZipCode->localidade;        
+        $attributes['neighborhood'] = $addressByZipCode->bairro;
+        $attributes['street'] = $addressByZipCode->logradouro;
+        
+        
         $attributes['image']= empty($image)?null:$image;
         $attributes['password'] = bcrypt($attributes['password']);
         

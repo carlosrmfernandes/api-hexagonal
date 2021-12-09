@@ -6,6 +6,7 @@ use App\Repository\V1\User\UserRepository;
 use App\Repository\V1\UserType\UserTypeRepository;
 use App\Repository\V1\Category\CategoryRepository;
 use App\Repository\V1\Address\AddressRepository;
+use App\Components\AddressByZipCode\Client as ClientAuthorizationAddressByZipCode;
 use function bcrypt;
 use Validator;
 
@@ -19,10 +20,7 @@ class UserServiceRegistration {
     protected $addressRepository;
 
     public function __construct(
-            UserRepository $userRepository, 
-            UserTypeRepository $userTypeRepository, 
-            CategoryRepository $categoryRepository, 
-            AddressRepository $addressRepository
+    UserRepository $userRepository, UserTypeRepository $userTypeRepository, CategoryRepository $categoryRepository, AddressRepository $addressRepository
     ) {
         $this->userRepository = $userRepository;
         $this->userTypeRepository = $userTypeRepository;
@@ -37,7 +35,7 @@ class UserServiceRegistration {
         } else {
             $attributes = $request;
         }
-        
+
         if (($attributes['user_type_id']) && $attributes['user_type_id'] == 2) {
             if (empty($attributes['category_id'])) {
                 return "The category_id field is required.";
@@ -69,14 +67,24 @@ class UserServiceRegistration {
                 return "category_id invalid";
             }
         }
-        $attributes['password'] = bcrypt($attributes['password']);        
+
+        $addressByZipCode = app(ClientAuthorizationAddressByZipCode::class)->addressByZipCode($attributes['cep']);
+
+        if (!$addressByZipCode) {
+            return (object) "error looking up address via zip code";
+        }
+        $attributes['state'] = $addressByZipCode->localidade;        
+        $attributes['neighborhood'] = $addressByZipCode->bairro;
+        $attributes['street'] = $addressByZipCode->logradouro;
         
+        $attributes['password'] = bcrypt($attributes['password']);
+
         if (!empty($attributes['image']) && $request->hasFile('image')) {
             $image = $this->uploadImg($request->file('image'), $attributes['cpf_cnpj']);
         }
-        
+
         $attributes['image'] = empty($image) ? null : $image;
-        
+
         $addres = $this->addressRepository->save($attributes);
         if ($addres) {
             $attributes['address_id'] = $addres->id;

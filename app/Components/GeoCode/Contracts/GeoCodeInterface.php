@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Components\Delivery\Contracts;
+namespace App\Components\GeoCode\Contracts;
 
-interface DeliveryInterface
+interface GeoCodeInterface
 {
 
     /**
      * @param array $data
      * @return Object
      */
-    public function delivery(
+    public function geoCode(
         array $data
     ): Object;
 }

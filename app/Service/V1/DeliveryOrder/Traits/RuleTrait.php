@@ -21,10 +21,7 @@ trait RuleTrait
         return [
             'product_id' => 'required|integer',
             'quantity' => 'required|integer',
-            'cep' => 'required|string',
-            'city' => 'required|string',
-            'neighborhood' => 'required|string',
-            'street' => 'required|string',
+            'cep' => 'required|string',                       
             'street_number' => 'required|integer',
             'complement' => 'required|string',            
         ];

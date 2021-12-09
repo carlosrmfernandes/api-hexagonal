@@ -54,6 +54,10 @@ Route::group(['middleware' => ['apiJwt', 'checkUser'], 'prefix' => 'auth',], fun
     Route::get('notification/{id}', 'V1\\NotificationController@show');
     Route::get('notification-read-done', 'V1\\NotificationController@notificationReadDone');
     Route::get('notification-read-not', 'V1\\NotificationController@notificationNotRead');
+    
+    //Integration Taximachine Delivery
+    
+    Route::get('estimate-delivery', 'V1\\EstimateDelivery@estimateDelivery');
 });
 
 Route::group(['prefix' => ''], function ($router) {

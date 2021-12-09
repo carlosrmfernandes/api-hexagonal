@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Components\Delivery\Strategies;
+namespace App\Components\OpenDelivery\Strategies;
 
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use App\Components\Delivery\Contracts\DeliveryInterface;
-use App\Components\Delivery\Exceptions\DeliveryException;
+use App\Components\OpenDelivery\Contracts\DeliveryInterface;
+use App\Components\OpenDelivery\Exceptions\DeliveryException;
 
 class DeliveryStrategy implements DeliveryInterface
 {
@@ -33,10 +33,15 @@ class DeliveryStrategy implements DeliveryInterface
     public function delivery(
     array $data
     ): Object
-    {
+    {        
         try {            
-            $response = $this->client->request('', [
-                'json' => '',
+            $response = $this->client->request('POST','/api/integracao/abrirEntrega', [
+                'headers' => [
+                    'api-key' => config('taximachine')['api-key'],
+                    'Authorization' => 'Basic ' . base64_encode(config('taximachine')['email'] . ":" . config('taximachine')['password']),
+                    'Content-Type' => 'application/json'
+                ],
+                'json' => $data,
             ]);
             return json_decode($response->getBody()->getContents());
         } catch (ClientException $exception) {

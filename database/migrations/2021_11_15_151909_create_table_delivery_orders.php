@@ -17,8 +17,7 @@ class CreateTableDeliveryOrders extends Migration
             $table->bigIncrements('id');
             $table->integer('quantity');            
             $table->integer('status')->nullable(); // 0 => Pending 1 => Received
-            $table->string('cep')->nullable();            
-            $table->string('city')->nullable();
+            $table->string('cep')->nullable();                        
             $table->string('neighborhood')->nullable();
             $table->string('street')->nullable();
             $table->string('street_number')->nullable();
@@ -28,6 +27,7 @@ class CreateTableDeliveryOrders extends Migration
             $table->unsignedBigInteger('consumer_id');
             $table->foreign('consumer_id')->references('id')->on('users');
             $table->unsignedBigInteger('seller_id');
+            $table->integer('id_mch')->nullable();
             $table->foreign('seller_id')->references('id')->on('users');
             $table->timestamps();
         });

@@ -1,8 +1,8 @@
 <?php
-namespace App\Components\Delivery;
+namespace App\Components\EstimateDelivery;
 use Exception;
-use App\Components\Delivery\Contracts\DeliveryInterface;
-use App\Components\Delivery\Exceptions\DeliveryException;
+use App\Components\EstimateDelivery\Contracts\DeliveryInterface;
+use App\Components\EstimateDelivery\Exceptions\DeliveryException;
 
 class Client
 {
@@ -32,7 +32,7 @@ class Client
             return $this->deliveryInterface->delivery(
                 $data
             );
-        } catch (Exception $exception) {
+        } catch (Exception $exception) {            
             throw new DeliveryException(
                 $exception->getMessage(),
                 $exception->getCode()

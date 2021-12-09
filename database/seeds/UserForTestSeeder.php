@@ -16,8 +16,7 @@ class UserForTestSeeder extends Seeder
     {
         $address = [
             'cep' => '03704020',
-            'state' => 'São Paulo',
-            'city' => $faker->city(),
+            'state' => 'São Paulo',            
             'neighborhood' => 'Penha',        
             'street' => $faker->streetName(),
             'street_number' => $faker->numberBetween(10, 100),

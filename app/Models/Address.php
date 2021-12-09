@@ -8,10 +8,10 @@ class Address extends Model
 {
     protected $table = 'address';
     protected $fillable = [
-        'cep','state','city','neighborhood','street','street_number','complement'
+        'cep','state','neighborhood','street','street_number','complement'
     ];
     protected $visible = [
-        'id','cep','state','city','neighborhood','street','street_number','complement'
+        'id','cep','state','neighborhood','street','street_number','complement'
     ];
 
 }
