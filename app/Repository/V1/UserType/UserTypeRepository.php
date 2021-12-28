@@ -55,7 +55,7 @@ class UserTypeRepository extends BaseRepository
     {
         if ($searchQuery) {
             return $this->obj
-                            ->where('name', 'ilike', '%' . $searchQuery . '%')
+                            ->where('name', 'like', '%' . $searchQuery . '%')
                             ->get();
         }
         return $this->obj->all();

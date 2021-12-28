@@ -44,11 +44,14 @@ class AuthController extends Controller
 
         if ($this->userServiceLogin->login($credentials)) {
             if (!$token = auth('api')->attempt($credentials)) {
-                return response()->json(['error' => 'Usuário Não autorizado'], 401);
+                return response()->json(['error' => 'Usuário não autorizado'], 401);
             }
+            if(!$this->userServiceLogin->login($credentials)->is_active){
+                return response()->json(['error' => 'Usuário inativo'], 401);
+            }            
             return $this->respondWithToken($token);
         } else {
-            return response()->json(['data' => 'Usuário Não foi encontrado']);
+            return response()->json(['data' => 'Usuário não foi encontrado']);
         }
     }
 

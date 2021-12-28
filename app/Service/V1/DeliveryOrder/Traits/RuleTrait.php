@@ -19,10 +19,11 @@ trait RuleTrait
     public function rules($id = null)
     {
         return [
-            'status' => 'required|boolean|max:1',
             'product_id' => 'required|integer',
             'quantity' => 'required|integer',
-            'delivery_address' => 'required|string|max:255',
+            'cep' => 'required|string',                       
+            'street_number' => 'required|integer',
+            'complement' => 'required|string',            
         ];
     }
 }

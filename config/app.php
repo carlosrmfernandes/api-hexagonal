@@ -168,12 +168,16 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         \App\Providers\ExampleWeatherProvider::class,
         \App\Providers\MercadoPagoProvider::class,
+        \App\Providers\OpenDeliveryServiceProvider::class,
+        \App\Providers\EstimateDeliverySeviceProvider::class,
+        \App\Providers\AddressByZipCodeServiceProvider::class,
+        \App\Providers\GeoCodeServiceProvider::class,
         /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 

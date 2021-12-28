@@ -5,7 +5,6 @@ namespace App\Service\V1\Product;
 use App\Repository\V1\Product\ProductRepository;
 use App\Repository\V1\User\UserRepository;
 use App\Repository\V1\SubCategory\SubCategoryRepository;
-use App\Repository\V1\Category\CategoryRepository;
 use Validator;
 
 class ProductServiceRegistration
@@ -20,50 +19,49 @@ class ProductServiceRegistration
     public function __construct(
         ProductRepository $productRepository,
         UserRepository $userRepository,
-        SubCategoryRepository $subCategoryRepository,
-        CategoryRepository $categoryRepository
+        SubCategoryRepository $subCategoryRepository
     )
     {
         $this->productRepository = $productRepository;
         $this->userRepository = $userRepository;
         $this->subCategoryRepository = $subCategoryRepository;
-        $this->categoryRepository = $categoryRepository;
     }
 
     public function store($request)
-    {
+    {       
         $attributes = null;
-        $image = null;
         if (is_object($request)) {
             $attributes = $request->all();
         } else {
             $attributes = $request;
         }
-         $attributes['user_id']= auth()->user()->id;
+        
+         $attributes['seller_id']= auth('api')->user()->id;
+         
          $validator = Validator::make($attributes, $this->rules());
 
         if ($validator->fails()) {
              return $validator->errors();
         }
 
-        if (!get_object_vars(($this->userRepository->show($attributes['user_id'])))) {
-            return "user_id invalid";
+        if (!get_object_vars(($this->userRepository->show($attributes['seller_id'])))) {
+            return "seller_id invalid";
         }
 
-        if (!($this->isValidCategoryAndSubCatecory($attributes['sub_category_id'],$attributes['user_id']))) {
+        if (!($this->isValidCategoryAndSubCatecory($attributes['sub_category_id'],$attributes['seller_id']))) {
             return "sub_category_id invalid";
         }
 
-        if ($request->hasFile('image')) {
+        if (!empty($attributes['image']) && $request->hasFile('image')) {
              $image = $this->uploadImg($request->file('image'));
         }
-        $attributes['image']= $image;
+        $attributes['image']= empty($image)?null:$image;
         $product = $this->productRepository->save($attributes);
         return $product?$product:'unidentified product';
     }
     public function uploadImg($file)
     {
-        return  $file->store('imagens/'.auth()->user()->cpf_cnpj, 'public');
+        return  $file->store('imagens/'.auth('api')->user()->cpf_cnpj, 'public');
     }
 
     public function isValidCategoryAndSubCatecory($subCategoryId,$userId)

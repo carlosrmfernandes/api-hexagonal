@@ -21,8 +21,8 @@ class CreateUserTypesTable extends Migration
             $table->timestamps();
         });
         DB::table('user_types')->insert([
-            ['name' => 'Comun', 'created_at' => Carbon::now()],
-            ['name' => 'Lojista', 'created_at' => Carbon::now()]
+            ['name' => 'Consumer', 'created_at' => Carbon::now()],
+            ['name' => 'Seller', 'created_at' => Carbon::now()]
         ]);
     }
 

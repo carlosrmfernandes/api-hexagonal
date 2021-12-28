@@ -22,14 +22,13 @@ trait RuleTrait
             'name' => 'required|string|max:255',
             'cpf_cnpj' => 'required|string|max:255|unique:users,cpf_cnpj' . ($id == null ? '' : ',' . $id),
             'email' => 'required|string|max:255|unique:users,email' . ($id == null ? '' : ',' . $id),
-            'phone' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
             'is_active' => 'required|boolean|max:1',
             'password' => 'required|string|max:255',
             'company_name' => 'string|max:255',
             'user_type_id' => 'required|integer',
+            'cep' => 'required|string',
+            'street_number' => 'required|string',
+            'complement' => 'required|string',
         ];
     }
 

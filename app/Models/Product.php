@@ -8,14 +8,14 @@ class Product extends Model
 {
 
     protected $fillable = [
-        'name', 'description', 'image', 'price','available','user_id','sub_category_id','image'
+        'name', 'description', 'image', 'price','available','seller_id','sub_category_id','image'
     ];
     protected $visible = [
-        'id', 'name', 'description', 'image', 'price','available','user_id','user_id','sub_category_id','subCategory','image','user'
+        'id', 'name', 'description', 'image', 'price','available','seller_id','sub_category_id','subCategory','image','user'
     ];
 
     public function user(){
-        return $this->hasOne(User::class,'id','user_id');
+        return $this->hasOne(User::class,'id','seller_id');
     }
 
     public function subCategory(){

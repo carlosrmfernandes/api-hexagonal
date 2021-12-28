@@ -23,7 +23,7 @@ trait RuleTrait
             'description' => 'required|string|max:255',
             'price' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
             'available' => 'required|boolean|max:1',
-            'user_id' => 'required|integer',
+            'seller_id' => 'required|integer',
             'sub_category_id' => 'required|integer',
         ];
     }

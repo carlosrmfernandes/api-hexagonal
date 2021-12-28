@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/routes/api.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Controllers/V1/CategoryController.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/DeliveryOrder/DeliveryOrderRegistration.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Controllers/V1/EstimateDelivery.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Components/OpenDelivery/Exceptions/DeliveryException.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/storage/logs/laravel.log</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Providers/OpenDeliveryServiceProvider.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Components/ExampleWeatherIntegration/Strategies/ExampleWeatherStrategy.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Components/OpenDelivery/Strategies/DeliveryStrategy.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/DeliveryOrder/DeliveryOrderServiceAll.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Controllers/V1/ProductController.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Controllers/V1/DeliveryOrderController.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Providers/ExampleWeatherProvider.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/database/migrations/2021_11_15_151909_create_table_delivery_orders.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Components/EstimateDelivery/Client.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Components/ExampleWeatherIntegration/Client.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/.env</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Components/EstimateDelivery/Strategies/DeliveryStrategy.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Components/OpenDelivery/Contracts/DeliveryInterface.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/config/app.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Components/EstimateDelivery/Exceptions/DeliveryException.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Components/OpenDelivery/Client.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/app/Providers/EstimateDeliverySeviceProvider.php</file>
+            <file>file:/Users/carlosfernandes/Desktop/Hope/App%20-%20Rondonia/api-app/config/taximachine.php</file>
+        </group>
+    </open-files>
+</project-private>

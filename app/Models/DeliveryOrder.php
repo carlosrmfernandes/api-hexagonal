@@ -8,10 +8,10 @@ class DeliveryOrder extends Model
 {
 
     protected $fillable = [
-        'product_id', 'quantity', 'price','status','delivery_address','user_id'
+        'product_id', 'quantity', 'price','status','cep','neighborhood','street','street_number','complement','consumer_id','seller_id'
     ];
     protected $visible = [
-        'id', 'product_id', 'quantity', 'price','status','delivery_address'.'user_id','product'
+        'id', 'product_id', 'quantity', 'price','status','cep','neighborhood','street','street_number','complement','consumer_id','seller_id','product' 
     ];
 
     public function product()

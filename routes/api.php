@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::get('/', function () {
     echo "api rodando";
 });
 
-Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',], function ($router) {
+Route::group(['middleware' => ['apiJwt', 'checkUser'], 'prefix' => 'auth',], function ($router) {
 
     //User
-    Route::middleware(['checkUser'])->group(function () {
+    Route::middleware(['checkUserPermission'])->group(function () {
         Route::post('user/{id}', 'V1\\UserController@update');
         Route::get('user/{id}', 'V1\\UserController@show');
     });
@@ -32,24 +33,18 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
 
         Route::get('user-type/{id}', 'V1\\UserTypeController@show');
         Route::get('user-type', 'V1\\UserTypeController@index');
-
     });
 
     //Products
     Route::post('product', 'V1\\ProductController@store');
-    Route::get('product/{id}', 'V1\\ProductController@show');
     Route::post('product/{id}', 'V1\\ProductController@update');
 
-    //Category
-    Route::get('category', 'V1\\CategoryController@index');
-    Route::get('category/{id}', 'V1\\CategoryController@show');
+    //Order
+    Route::middleware(['checkUserType'])->group(function () {
+        Route::post('delivery-order', 'V1\\DeliveryOrderController@store');
+    });
 
-    //Establishment
-    Route::get('establishment/{id}', 'V1\\EstablishmentController@show');
-    Route::get('establishment', 'V1\\EstablishmentController@index');
-
-    //Delivery Order
-    Route::post('delivery-order', 'V1\\DeliveryOrderController@store');
+    Route::post('delivery-order/{id}', 'V1\\DeliveryOrderController@update');
     Route::get('delivery-order', 'V1\\DeliveryOrderController@index');
     Route::get('delivery-order/{id}', 'V1\\DeliveryOrderController@show');
     Route::post('delivery-order/{id}', 'V1\\DeliveryOrderController@update');
@@ -64,11 +59,36 @@ Route::group(['middleware' => ['apiJwt', 'checkUserType'], 'prefix' => 'auth',],
     //Payment
     Route::post('payment', 'V1\\MercadoPagoCotroller@storePayment');
 
+    Route::get('order-seller/{id?}', 'V1\\DeliveryOrderController@showOrderSeller');
+
+    //Notification
+    Route::get('notification', 'V1\\NotificationController@index');
+    Route::get('notification/{id}', 'V1\\NotificationController@show');
+    Route::get('notification-read-done', 'V1\\NotificationController@notificationReadDone');
+    Route::get('notification-read-not', 'V1\\NotificationController@notificationNotRead');
+
+    //Integration Taximachine Delivery
+
+    Route::get('estimate-delivery', 'V1\\EstimateDelivery@estimateDelivery');
 });
 
 Route::group(['prefix' => ''], function ($router) {
+    //User
     Route::post('user', 'V1\\UserController@store');
     Route::post('login', 'V1\\AuthController@login');
     Route::get('example-weather/{id}', 'V1\\ExampleWeatherCotroller@show');
     Route::get('indetification-types', 'V1\\MercadoPagoCotroller@showIdentificationType');
+
+    //Category
+    Route::get('category', 'V1\\CategoryController@index');
+    Route::get('category/{id}', 'V1\\CategoryController@show');
+    Route::get('category-seller/{id}', 'V1\\CategoryController@categoryWithseller');
+
+    //Products
+    Route::get('product/{id}', 'V1\\ProductController@show');
+
+    //Seller
+    Route::get('seller-products/{id}', 'V1\\SellerController@sellerWithProducts');
+    Route::get('seller/{id}', 'V1\\SellerController@showSubCategoryWithProduct');
+    Route::get('seller', 'V1\\SellerController@index');
 });

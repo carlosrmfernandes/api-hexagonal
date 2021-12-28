@@ -3,8 +3,9 @@
 namespace Tests\Unit\Register;
 
 use App\Models\User;
-use App\Models\UserType;
+use App\Models\Address;
 use Tests\TestCase;
+
 class UserTest extends TestCase {
 
     /**
@@ -17,26 +18,21 @@ class UserTest extends TestCase {
 
     function test_create() {
 
-        $user= factory(User::class)->create();
-        if (is_object($user)) {
-            $expceted = User::find($user->id);
-            $this->assertEquals($expceted->id, $user->id);
-            $this->login($user);
-        } else {
-            dd($user);
-        }
+        $address = factory(Address::class)->create();
+        $expcetedAddressId = Address::find($address->id);       
+        $this->assertEquals($expcetedAddressId->id, $address->id);        
+        $user = factory(User::class)->create();
+        
+        $expcetedUserId = User::find($user->id);        
+        $this->assertEquals($expcetedUserId->id, $user->id);
+        $this->login($user);
     }
 
     function login($user) {
-         $this->be($user);
-         $expceted= User::find($user->id);
-         if($user){
-             $this->assertEquals($expceted->id, $user->id);
-         }else{
-             dd('Unauthorized User');
-         }
+        $this->be($user);
+        $expceted = User::find($user->id);        
+        $this->assertEquals($expceted->id, $user->id);
+        
     }
-
-
 
 }

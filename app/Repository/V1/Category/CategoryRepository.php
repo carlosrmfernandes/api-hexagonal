@@ -58,4 +58,14 @@ class CategoryRepository extends BaseRepository
                         ->first();
     }
 
+    public function categoryWithSeller($searchQuery = null, int $id = null){
+
+        return (object) $this->obj
+                        ->with(['users.address','users.category','users'=>function($query) use ($searchQuery){
+                            $query->where("name", "like", "%" . $searchQuery . "%");
+                        }])
+                        ->where('id', $id)
+                        ->first();
+    }
+
 }

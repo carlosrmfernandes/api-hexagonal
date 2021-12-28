@@ -13,21 +13,22 @@ class DeliveryOrderRepository extends BaseRepository
     {
         parent::__construct($deliveryOrder);
     }
-    public function all($searchQuery = null): object
+    public function all($user_type = null, $searchQuery = null): object
     {
         if ($searchQuery) {
-            return $this->obj->orWhereHas('product', function ($query) use ($searchQuery) {
-                $query->where('name', 'ilike', '%' . $searchQuery . '%')
-                    ->where('user_id', auth()->user()->id);
-            })
-                ->with(['product.subCategory', 'product.user.category'])
+            return $this->obj
+                ->with(['product.subCategory', 'product.user.category','product.user.address',
+                    'product'=>function ($query) use ($searchQuery) {
+                    $query->where('name', 'like', '%' . $searchQuery . '%');
+                }])
+                ->where("$user_type", auth('api')->user()->id)
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
 
         return $this->obj
-            ->with(['product.subCategory', 'product.user.category'])
-            ->where('user_id', auth()->user()->id)
+            ->with(['product.subCategory', 'product.user.category','product.user.address',])
+            ->where("$user_type", auth('api')->user()->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
     }
@@ -56,18 +57,34 @@ class DeliveryOrderRepository extends BaseRepository
             }
 
             DB::commit();
-            return (object) $deliveryOrder;
+            return (object) $deliveryOrder
+                    ->with(['product', 'product.user','product.user.address'])
+                    ->where('id', $id)
+                    ->where('seller_id', auth('api')->user()->id)
+                    ->first();
         } catch (Exception $ex) {
             DB::rollback();
             return $ex->getMessage();
         }
     }
 
-    public function show(int $id): object
+    public function show(string $user_type, int $id): object
     {
         return (object) $this->obj
             ->with(['product.subCategory', 'product.user.category'])
             ->where('id', $id)
+            ->where("$user_type", auth('api')->user()->id)
             ->first();
+    }
+
+    public function verifyOrderSeller(int $id = null, $productId= null): object
+    {
+           return (object) $this->obj
+                ->with(['product.subCategory', 'product.user.category'])
+                ->where('id', $id)
+                ->where('product_id', $productId)
+                ->where('seller_id', auth('api')->user()->id)
+                ->first();
+
     }
 }

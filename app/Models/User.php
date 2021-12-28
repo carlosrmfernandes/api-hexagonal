@@ -18,10 +18,10 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'cpf_cnpj', 'email', 'phone', 'state', 'city','address','is_active','password','company_name','category_id','user_type_id'
+        'name', 'cpf_cnpj', 'email', 'phone','address_id' ,'is_active','password','company_name','image','category_id','user_type_id'
     ];
     protected $visible = [
-        'id', 'name', 'cpf_cnpj', 'email', 'phone', 'state', 'city','address','is_active','password','company_name','category_id','user_type_id','userType','product','category'
+        'id', 'name', 'cpf_cnpj', 'email', 'phone', 'address_id','is_active','password','company_name','image','category_id','user_type_id','userType','product','category','address'
     ];
 
     /**
@@ -58,13 +58,17 @@ class User extends Authenticatable implements JWTSubject
     public function userType(){
         return $this->hasOne(UserType::class,'id','user_type_id');
     }
-
+    
+    public function address(){
+        return $this->hasOne(Address::class,'id','address_id');
+    }
+    
     public function category(){
         return $this->hasOne(Category::class,'id','category_id');
     }
 
     public function product(){
-        return $this->hasMany(Product::class,'user_id','id');
+        return $this->hasMany(Product::class,'seller_id','id');
     }
 
     /**
