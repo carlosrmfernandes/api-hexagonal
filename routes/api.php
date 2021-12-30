@@ -47,6 +47,18 @@ Route::group(['middleware' => ['apiJwt', 'checkUser'], 'prefix' => 'auth',], fun
     Route::post('delivery-order/{id}', 'V1\\DeliveryOrderController@update');
     Route::get('delivery-order', 'V1\\DeliveryOrderController@index');
     Route::get('delivery-order/{id}', 'V1\\DeliveryOrderController@show');
+    Route::post('delivery-order/{id}', 'V1\\DeliveryOrderController@update');
+
+    //Customer
+    Route::get('customers/{id}', 'V1\\MercadoPagoCotroller@showCustomer');
+    Route::get('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@showCards');
+    Route::post('customers', 'V1\\MercadoPagoCotroller@storeCustomer');
+    Route::post('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@storeCard');
+    Route::delete('customers/{customer_id}/cards/{id}', 'V1\\MercadoPagoCotroller@deleteCard');
+
+    //Payment
+    Route::post('payment', 'V1\\MercadoPagoCotroller@storePayment');
+
     Route::get('order-seller/{id?}', 'V1\\DeliveryOrderController@showOrderSeller');
 
     //Notification
@@ -54,9 +66,9 @@ Route::group(['middleware' => ['apiJwt', 'checkUser'], 'prefix' => 'auth',], fun
     Route::get('notification/{id}', 'V1\\NotificationController@show');
     Route::get('notification-read-done', 'V1\\NotificationController@notificationReadDone');
     Route::get('notification-read-not', 'V1\\NotificationController@notificationNotRead');
-    
+
     //Integration Taximachine Delivery
-    
+
     Route::get('estimate-delivery', 'V1\\EstimateDelivery@estimateDelivery');
 });
 
@@ -65,6 +77,7 @@ Route::group(['prefix' => ''], function ($router) {
     Route::post('user', 'V1\\UserController@store');
     Route::post('login', 'V1\\AuthController@login');
     Route::get('example-weather/{id}', 'V1\\ExampleWeatherCotroller@show');
+    Route::get('indetification-types', 'V1\\MercadoPagoCotroller@showIdentificationType');
 
     //Category
     Route::get('category', 'V1\\CategoryController@index');

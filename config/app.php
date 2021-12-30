@@ -167,6 +167,7 @@ return [
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         \App\Providers\ExampleWeatherProvider::class,
+        \App\Providers\MercadoPagoProvider::class,
         \App\Providers\OpenDeliveryServiceProvider::class,
         \App\Providers\EstimateDeliverySeviceProvider::class,
         \App\Providers\AddressByZipCodeServiceProvider::class,
