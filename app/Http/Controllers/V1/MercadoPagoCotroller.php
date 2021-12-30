@@ -107,9 +107,9 @@ class MercadoPagoCotroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function deleteCard($customerID)
+    public function deleteCard($customerID, $id)
     {
-        return response()->json(['data' => app(ClientAuthorization::class)->deleteCard($customerID)]);
+        return response()->json(['data' => app(ClientAuthorization::class)->deleteCard($customerID, $id)]);
     }
 
 }

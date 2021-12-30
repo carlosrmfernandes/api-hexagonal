@@ -54,7 +54,7 @@ Route::group(['middleware' => ['apiJwt', 'checkUser'], 'prefix' => 'auth',], fun
     Route::get('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@showCards');
     Route::post('customers', 'V1\\MercadoPagoCotroller@storeCustomer');
     Route::post('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@storeCard');
-    Route::delete('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@deleteCard');
+    Route::delete('customers/{customer_id}/cards/{id}', 'V1\\MercadoPagoCotroller@deleteCard');
 
     //Payment
     Route::post('payment', 'V1\\MercadoPagoCotroller@storePayment');

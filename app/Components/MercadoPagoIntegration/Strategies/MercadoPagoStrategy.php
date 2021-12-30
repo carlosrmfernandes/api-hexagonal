@@ -104,8 +104,8 @@ class MercadoPagoStrategy implements MercadoPagoInterface
 
             if (is_object($request)) {
                 $body = $request->all();
+                $body["address"]["street_number"] = intval($body["address"]["street_number"]);
             }
-
             $response = $this->client->request('POST', '/v1/customers' , [
                 'json' => $body,
                 'headers' => [
@@ -225,7 +225,7 @@ class MercadoPagoStrategy implements MercadoPagoInterface
      * @throws Exception
      */
     public function deleteCard(
-        $customerID
+        $customerID, $id
     ): Object
     {
         $config = config('mercadopago');
@@ -264,9 +264,12 @@ class MercadoPagoStrategy implements MercadoPagoInterface
 
             if (is_object($request)) {
                 $body = $request->all();
+                $body["transaction_amount"] = floatval($body["transaction_amount"]);
+                $body["order"]["id"] = intval($body["order"]["id"]);
+                $body["installments"] = intval($body["installments"]);
             }
 
-            $response = $this->client->request('POST', '/v1/payments/', [
+            $response = $this->client->request('POST', '/v1/payments', [
                 'json' => $body,
                 'headers' => [
                     "Accept" => "application/json",
