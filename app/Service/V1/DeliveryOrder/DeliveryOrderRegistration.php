@@ -7,6 +7,9 @@ use App\Repository\V1\User\UserRepository;
 use App\Repository\V1\DeliveryOrder\DeliveryOrderRepository;
 use App\Service\V1\Notification\DeliveryOrderServiceNotificationSeller;
 use App\Components\AddressByZipCode\Client as ClientAuthorizationAddressByZipCode;
+use App\Components\EstimateDelivery\Client as ClientAuthorizationEstimateDelivery;
+use App\Components\OpenDelivery\Client as ClientAuthorizationOpenDelivery;
+use App\Models\DeliveryOrder;
 use Validator;
 
 class DeliveryOrderRegistration {
@@ -20,6 +23,8 @@ class DeliveryOrderRegistration {
     protected $sellerId;
     protected $count = 1;
     protected $deliveryOrdersDone = [];
+    protected $ordersForUpdateWithMotoboyID = [];
+    protected $addressByZipCode;
 
     public function __construct(
     ProductRepository $productRepository, UserRepository $userRepository, DeliveryOrderRepository $deliveryOrderRepository
@@ -44,20 +49,22 @@ class DeliveryOrderRegistration {
                     if (!get_object_vars(($this->productRepository->show($delivery_order['product_id'])))) {
                         return "product_id invalid";
                     }
+
+                    $this->addressByZipCode = $this->addressByZipCode($delivery_order['cep']);
+
+                    if (empty($this->addressByZipCode->cep)) {
+                        return $this->addressByZipCode->scalar;
+                    }
+
                     $validator = Validator::make($delivery_order, $this->rules());
                     if ($validator->fails()) {
                         return $validator->errors();
                     }
 
-                    $addressByZipCode = app(ClientAuthorizationAddressByZipCode::class)->addressByZipCode($delivery_order['cep']);
-
-                    if (!$addressByZipCode) {
-                        return (object) "error looking up address via zip code";
-                    }
-                    
-                    $delivery_order['state'] = $addressByZipCode->localidade;
-                    $delivery_order['neighborhood'] = $addressByZipCode->bairro;
-                    $delivery_order['street'] = $addressByZipCode->logradouro;
+                    $delivery_order['state'] = $this->addressByZipCode->localidade;
+                    $delivery_order['neighborhood'] = $this->addressByZipCode->bairro;
+                    $delivery_order['street'] = $this->addressByZipCode->logradouro;
+                    $delivery_order['amount_total'] = $delivery_order['quantity'] * $this->productRepository->show($delivery_order['product_id'])->price;
 
                     if ($orderOk) {
                         $delivery_order['status'] = 0;
@@ -68,8 +75,7 @@ class DeliveryOrderRegistration {
                                 ->show($delivery_order['product_id']);
                         $this->sellerId = $this->deliveryOrdersDone[$key]['product']->seller_id;
                         $delivery_order['seller_id'] = $this->sellerId;
-
-                        $this->deliveryOrderRepository->save($delivery_order);
+                        $this->ordersForUpdateWithMotoboyID[$key] = $this->deliveryOrderRepository->save($delivery_order);
                     }
                 }
             }
@@ -77,7 +83,16 @@ class DeliveryOrderRegistration {
             if ($orderEverythingOk && $this->count == 1) {
                 $this->count++;
                 $this->store($deliveryOrders, true);
-                $this->deliveryOrderServiceNotificationSeller();
+                $estimateDelivery = $this->estimateDelivery();
+                if ($estimateDelivery->success) {
+                    $openDelivery = $this->openDelivery($estimateDelivery);
+                    if ($openDelivery->success) {
+                        $this->ordersForUpdateWithMotoboyID($openDelivery);
+                        $this->deliveryOrderServiceNotificationSeller();
+                    }
+                } else {
+                    return 'Something went wrong';
+                }
             }
         }
 
@@ -88,6 +103,69 @@ class DeliveryOrderRegistration {
         (new DeliveryOrderServiceNotificationSeller(
         $this->deliveryOrdersDone, $this->sellerId
         ))->notification();
+    }
+
+    function addressByZipCode($cep) {
+        return app(ClientAuthorizationAddressByZipCode::class)->addressByZipCode($cep);
+    }
+
+    public function estimateDelivery() {
+
+        $parameters = [
+            "seller_id" => $this->deliveryOrdersDone[0]['product']['seller_id'],
+            "endereco_desejado" => $this->addressByZipCode->logradouro,
+            "bairro_desejado" => $this->addressByZipCode->bairro,
+            "cidade_desejado" => $this->addressByZipCode->localidade
+        ];
+        return app(ClientAuthorizationEstimateDelivery::class)->delivery($parameters);
+    }
+
+    function openDelivery($estimateDelivery) {
+        $parameters = [
+            "forma_pagamento" => config('taximachine')['forma_pagamento'],
+            "empresa_id" => config('taximachine')['empresa_id'],
+            "retorno" => false,
+            "estimativas" => [
+                "estimativa_km" => $estimateDelivery->response->estimativa_km,
+                "estimativa_minutos" => $estimateDelivery->response->estimativa_minutos,
+                "estimativa_valor" => $estimateDelivery->response->estimativa_valor
+            ],
+            "partida" => [
+                "endereco" => $this->deliveryOrdersDone[0]['product']['user']['address']['street'] . ', ' . $this->deliveryOrdersDone[0]['product']['user']['address']['street_number'],
+                "bairro" => $this->deliveryOrdersDone[0]['product']['user']['address']['neighborhood'],
+                "cidade" => $this->deliveryOrdersDone[0]['product']['user']['address']['state'],
+                "referencia" => $this->deliveryOrdersDone[0]['product']['user']['address']['complement'],
+                "lat" => $estimateDelivery->response->partida->lat,
+                "lng" => $estimateDelivery->response->partida->lng
+            ],
+            "paradas" => [
+                [
+                    "nome_cliente_parada" => $this->deliveryOrdersDone[0]['order_user']['name'],
+                    "telefone_cliente_parada" => $this->deliveryOrdersDone[0]['order_user']['phone'],
+                    "id_externo" => 1,
+                    "endereco_parada" => $this->deliveryOrdersDone[0]['street'] . ', ' . $this->deliveryOrdersDone[0]['street_number'],
+                    "bairro_parada" => $this->deliveryOrdersDone[0]['neighborhood'],
+                    "cidade_parada" => $this->deliveryOrdersDone[0]['state'],
+                    "lat_parada" => $estimateDelivery->response->desejado->lat,
+                    "lng_parada" => $estimateDelivery->response->desejado->lng,
+                ]
+            ]
+        ];
+        
+        return app(ClientAuthorizationOpenDelivery::class)->delivery($parameters);
+    }
+
+    function ordersForUpdateWithMotoboyID($openDelivery) {
+
+        foreach ($this->ordersForUpdateWithMotoboyID as $key => $value) {
+
+            $deliveryOrder = DeliveryOrder::find($value['id']);
+            if ($deliveryOrder) {
+                $deliveryOrder = $deliveryOrder->update([
+                    'id_mch' => $openDelivery->response->id_mch,
+                ]);
+            }
+        }
     }
 
 }

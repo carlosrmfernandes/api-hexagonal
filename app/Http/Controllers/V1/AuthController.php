@@ -51,7 +51,7 @@ class AuthController extends Controller
             }            
             return $this->respondWithToken($token);
         } else {
-            return response()->json(['data' => 'Usuário não foi encontrado']);
+            return response()->json(['error' => 'Usuário não foi encontrado']);
         }
     }
 

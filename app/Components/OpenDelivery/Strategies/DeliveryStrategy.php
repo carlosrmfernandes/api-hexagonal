@@ -34,7 +34,8 @@ class DeliveryStrategy implements DeliveryInterface
     array $data
     ): Object
     {        
-        try {            
+        try {  
+            
             $response = $this->client->request('POST','/api/integracao/abrirEntrega', [
                 'headers' => [
                     'api-key' => config('taximachine')['api-key'],
@@ -42,7 +43,7 @@ class DeliveryStrategy implements DeliveryInterface
                     'Content-Type' => 'application/json'
                 ],
                 'json' => $data,
-            ]);
+            ]);            
             return json_decode($response->getBody()->getContents());
         } catch (ClientException $exception) {
             $response = json_decode($exception->getResponse()->getBody()->getContents());

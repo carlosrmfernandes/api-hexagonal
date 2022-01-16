@@ -26,4 +26,11 @@ trait RuleTrait
             'complement' => 'required|string',            
         ];
     }
+    
+    public function rulesUpdateOrder()
+    {
+        return [
+            'status' => 'required|integer',            
+        ];
+    }
 }

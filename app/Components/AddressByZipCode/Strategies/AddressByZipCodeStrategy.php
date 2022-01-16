@@ -37,11 +37,11 @@ class AddressByZipCodeStrategy implements AddressByZipCodeInterface {
             
             return json_decode($addressByZipCodeStrategy->getBody()->getContents());            
         } catch (ClientException $exception) {
-            $response = json_decode($exception->getResponse()->getBody()->getContents());
-            dd($exception);
-            throw new AddressByZipCodeException(
-            $response->message, $exception->getCode()
-            );
+//            $response = json_decode($exception->getResponse()->getBody()->getContents());
+            return (object) "error looking up address via zip code";
+//            throw new AddressByZipCodeException(
+//            $response->message, $exception->getCode()
+//            );
         } catch (Exception $exception) {
             throw $exception;
         }

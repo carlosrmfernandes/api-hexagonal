@@ -32,7 +32,10 @@ class NotificationRepository extends BaseRepository
     {
         DB::beginTransaction();
         try {
-            $notification = $this->obj->find($id);
+            $notification = $this->obj
+                    ->where('notifiable_id',auth('api')->user()->id)
+                    ->where('id',$id)
+                    ->first();
             if ($notification) {
                 $notification->update([
                     'read_at' => date("Y-m-d H:i:s"),

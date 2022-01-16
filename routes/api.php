@@ -70,6 +70,8 @@ Route::group(['middleware' => ['apiJwt', 'checkUser'], 'prefix' => 'auth',], fun
     //Integration Taximachine Delivery
 
     Route::get('estimate-delivery', 'V1\\EstimateDelivery@estimateDelivery');
+    
+    Route::post('admin-report-seller', 'V1\\AdminController@export');
 });
 
 Route::group(['prefix' => ''], function ($router) {

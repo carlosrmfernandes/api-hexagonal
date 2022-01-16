@@ -28,7 +28,7 @@ trait RuleTrait
             'user_type_id' => 'required|integer',
             'cep' => 'required|string',
             'street_number' => 'required|string',
-            'complement' => 'required|string',
+            'complement' => 'string',
         ];
     }
 

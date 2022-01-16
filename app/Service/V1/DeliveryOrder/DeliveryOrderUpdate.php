@@ -23,7 +23,7 @@ class DeliveryOrderUpdate {
     public function update(int $id, Request $request) {
         $attributes = $request->all();
 
-        $validator = Validator::make($attributes, $this->rules($id));
+        $validator = Validator::make($attributes, $this->rulesUpdateOrder());
 
         if ($validator->fails()) {
             return $validator->errors();
@@ -33,19 +33,6 @@ class DeliveryOrderUpdate {
             return "Order invalid";
         }
 
-        if (!get_object_vars(($this->deliveryOrderRepository->verifyOrderSeller($id, $attributes['product_id'])))) {
-            return "Order does not belong to this seller";
-        }
-
-        $addressByZipCode = app(ClientAuthorizationAddressByZipCode::class)->addressByZipCode($attributes['cep']);
-
-        if (!$addressByZipCode) {
-            return (object) "error looking up address via zip code";
-        }
-        $attributes['state'] = $addressByZipCode->localidade;
-        $attributes['neighborhood'] = $addressByZipCode->bairro;
-        $attributes['street'] = $addressByZipCode->logradouro;
-        
         $deliveryOrder = $this->deliveryOrderRepository->update($id, $attributes);
 
         if ($deliveryOrder) {
