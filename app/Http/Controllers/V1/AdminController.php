@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Report\AdminReport;
 use App\Http\Controllers\Controller;
+use App\Service\V1\Admin\AdminService;
 use App\Report\Traits\RuleTrait;
 use Validator;
 
@@ -13,9 +14,11 @@ class AdminController extends Controller {
 
     use RuleTrait;
 
-    public function __construct(
+    public $adminService;
+
+    public function __construct(AdminService $adminService
     ) {
-        
+        $this->adminService = $adminService;
     }
 
     /**
@@ -77,14 +80,21 @@ class AdminController extends Controller {
     }
 
     public function export(Request $request) {
-        
+
         $parameters = $request->all();
         $validator = Validator::make($parameters, $this->rules());
         if ($validator->fails()) {
             return $validator->errors();
         }
-        
+
         return Excel::download(new AdminReport($parameters), 'relatorio.xlsx');
+    }
+
+    public function isActive($sellerId, Request $request) {
+        
+        $seller = $this->adminService->isActiveSeller($sellerId, $request);
+
+        return response()->json(['data' => $seller]);
     }
 
 }

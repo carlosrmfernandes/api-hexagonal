@@ -72,6 +72,8 @@ Route::group(['middleware' => ['apiJwt', 'checkUser'], 'prefix' => 'auth',], fun
     Route::get('estimate-delivery', 'V1\\EstimateDelivery@estimateDelivery');
     
     Route::post('admin-report-seller', 'V1\\AdminController@export');
+    Route::post('is-active-seller/{sellerId}', 'V1\\AdminController@isActive');
+    
 });
 
 Route::group(['prefix' => ''], function ($router) {
@@ -92,5 +94,5 @@ Route::group(['prefix' => ''], function ($router) {
     //Seller
     Route::get('seller-products/{id}', 'V1\\SellerController@sellerWithProducts');
     Route::get('seller/{id}', 'V1\\SellerController@showSubCategoryWithProduct');
-    Route::get('seller', 'V1\\SellerController@index');
+    Route::get('seller', 'V1\\SellerController@index');        
 });

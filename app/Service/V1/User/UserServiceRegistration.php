@@ -7,6 +7,8 @@ use App\Repository\V1\UserType\UserTypeRepository;
 use App\Repository\V1\Category\CategoryRepository;
 use App\Repository\V1\Address\AddressRepository;
 use App\Components\AddressByZipCode\Client as ClientAuthorizationAddressByZipCode;
+use App\Jobs\JobRegistrationConfirmation;
+use App\Models\User;
 use function bcrypt;
 use Validator;
 
@@ -73,10 +75,10 @@ class UserServiceRegistration {
         if (!$addressByZipCode) {
             return (object) "error looking up address via zip code";
         }
-        $attributes['state'] = $addressByZipCode->localidade;        
+        $attributes['state'] = $addressByZipCode->localidade;
         $attributes['neighborhood'] = $addressByZipCode->bairro;
         $attributes['street'] = $addressByZipCode->logradouro;
-        
+
         $attributes['password'] = bcrypt($attributes['password']);
 
         if (!empty($attributes['image']) && $request->hasFile('image')) {
@@ -89,6 +91,17 @@ class UserServiceRegistration {
         if ($addres) {
             $attributes['address_id'] = $addres->id;
             $user = $this->userRepository->save($attributes);
+
+            if ($user->userType->name == 'Seller') {
+                $seller = User::find($user->id);
+                if ($seller) {
+                    JobRegistrationConfirmation::dispatch($seller)
+                            ->delay(now()
+                                    ->addSecond('15'));
+
+                    return $user ? "Successful registration, check your email please" : 'unidentified user';
+                }
+            }
             return $user ? $user : 'unidentified user';
         }
         return $user ? $user : 'unidentified addres';

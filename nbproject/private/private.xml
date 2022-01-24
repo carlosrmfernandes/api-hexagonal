@@ -3,36 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Middleware/CheckForMaintenanceMode.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/.env</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Middleware/BlockRoute.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Middleware/CheckUser.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Filters/V1/DeliveryOrder/DeliveryOrderFilters.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/User/UserServiceRegistration.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/DeliveryOrder/DeliveryOrderServiceAll.php</file>
             <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Controllers/V1/UserController.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/config/app.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Controllers/V1/DeliveryOrderController.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/routes/api.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/composer.json</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Providers/RouteServiceProvider.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Models/User.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/DeliveryOrder/Traits/RuleTrait.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/database/migrations/2021_11_15_151909_create_table_delivery_orders.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/Product/ProductServiceRegistration.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Repository/V1/DeliveryOrder/DeliveryOrderRepository.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Models/DeliveryOrder.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Jobs/JobDeliveryOrderNotificationSeller.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/User/Traits/RuleTrait.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Models/Product.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Middleware/Authenticate.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/Product/Traits/RuleTrait.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Notifications/DeliveryOrderNotificationSeller.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/database/migrations/2021_11_15_151627_create_table_users.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/config/jwt.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Service/V1/DeliveryOrder/DeliveryOrderUpdate.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Controllers/V1/AuthController.php</file>
-            <file>file:/Users/carlosfernandes/iCloud%20Drive%20(Archive)/Desktop/Hope/App%20-%20Rondonia/api-app/app/Http/Kernel.php</file>
         </group>
     </open-files>
 </project-private>
