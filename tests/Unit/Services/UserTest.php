@@ -59,9 +59,8 @@ class UserTest extends TestCase {
         );
         $user = $userServiceRegistration->store($attributes);
         
-//        $this->assertEquals($user->getMessageBag()->getMessages()['cpf_cnpj'][0], 'The cpf cnpj has already been taken.');        
-         $expceted = User::find($user->id);
-         $this->assertEquals($expceted->id, $user->id);        
+//        $this->assertEquals($user->getMessageBag()->getMessages()['cpf_cnpj'][0], 'The cpf cnpj has already been taken.');                 
+         $this->assertEquals($user, "Successful registration, check your email please");
     }
 
 }
