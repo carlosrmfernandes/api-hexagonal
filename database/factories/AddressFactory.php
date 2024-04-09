@@ -1,9 +1,10 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\Models\Address;
+
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
+use Models\Address;
 
 /*
   |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ $factory->define(Address::class,  function (Faker $faker) {
 
     return [
         'cep' => '03704020',
-        'state' => 'São Paulo',        
+        'state' => 'São Paulo',
         'neighborhood' => 'Penha',
         'street' => $faker->streetName(),
         'street_number' => $faker->numberBetween(10, 100),

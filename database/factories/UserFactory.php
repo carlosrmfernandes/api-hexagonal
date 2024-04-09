@@ -1,9 +1,10 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\Models\User;
+
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
+use Models\UserS;
 
 /*
   |--------------------------------------------------------------------------
@@ -16,14 +17,14 @@ use Illuminate\Support\Str;
   |
  */
 
-$factory->define(User::class,  function (Faker $faker) {    
-    
+$factory->define(UserS::class,  function (Faker $faker) {
+
     return [
         'name' => $faker->name,
         'cpf_cnpj' => '24.925.701/0001-08',
         'email' => $faker->unique()->safeEmail,
-        'phone' => $faker->phoneNumber,        
-        'address_id' => App\Models\Address::orderBy('created_at', 'desc')->first()->id,        
+        'phone' => $faker->phoneNumber,
+        'address_id' => Models\Address::orderBy('created_at', 'desc')->first()->id,
         'is_active' => 1,
         'password' => bcrypt(123456),
         'company_name' => 'Hope',

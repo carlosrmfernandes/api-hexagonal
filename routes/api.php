@@ -1,7 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Presentation\Api\Controllers\V1\AuthController;
+use Presentation\Api\Controllers\V1\UserController;
+use Presentation\Api\Controllers\V1\BookController;
+use Presentation\Api\Controllers\V1\StoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,81 +21,24 @@ Route::get('/', function () {
     echo "api rodando";
 });
 
-Route::group(['middleware' => ['apiJwt', 'checkUser'], 'prefix' => 'auth',], function ($router) {
+Route::group(['middleware' => ['apiJwt'], 'prefix' => 'auth',], function ($router) {
+    Route::post('logout', [AuthController::class, 'logout']);
 
-    //User
-    Route::middleware(['checkUserPermission'])->group(function () {
-        Route::post('user/{id}', 'V1\\UserController@update');
-        Route::get('user/{id}', 'V1\\UserController@show');
-    });
+    Route::get('user/{id}', [UserController::class, 'show']);
 
-    //User Type
-    Route::middleware(['blockRoute'])->group(function () {
-        Route::post('user-type', 'V1\\UserTypeController@store');
-        Route::post('user-type/{id}', 'V1\\UserTypeController@update');
+    Route::post('book', [BookController::class, 'store']);
+    Route::get('book', [BookController::class, 'getAll']);
+    Route::put('book/{id}', [BookController::class, 'update']);
+    Route::delete('book/{id}', [BookController::class, 'delete']);
 
-        Route::get('user-type/{id}', 'V1\\UserTypeController@show');
-        Route::get('user-type', 'V1\\UserTypeController@index');
-    });
+    Route::post('store', [StoreController::class, 'store']);
+    Route::get('store', [StoreController::class, 'getAll']);
+    Route::put('store/{id}', [StoreController::class, 'update']);
+    Route::delete('store/{id}', [StoreController::class, 'delete']);
 
-    //Products
-    Route::post('product', 'V1\\ProductController@store');
-    Route::post('product/{id}', 'V1\\ProductController@update');
-
-    //Order
-    Route::middleware(['checkUserType'])->group(function () {
-        Route::post('delivery-order', 'V1\\DeliveryOrderController@store');
-    });
-
-    Route::post('delivery-order/{id}', 'V1\\DeliveryOrderController@update');
-    Route::get('delivery-order', 'V1\\DeliveryOrderController@index');
-    Route::get('delivery-order/{id}', 'V1\\DeliveryOrderController@show');
-    Route::post('delivery-order/{id}', 'V1\\DeliveryOrderController@update');
-
-    //Customer
-    Route::get('customers/{id}', 'V1\\MercadoPagoCotroller@showCustomer');
-    Route::get('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@showCards');
-    Route::post('customers', 'V1\\MercadoPagoCotroller@storeCustomer');
-    Route::post('customers/{customer_id}/cards', 'V1\\MercadoPagoCotroller@storeCard');
-    Route::delete('customers/{customer_id}/cards/{id}', 'V1\\MercadoPagoCotroller@deleteCard');
-
-    //Payment
-    Route::post('payment', 'V1\\MercadoPagoCotroller@storePayment');
-
-    Route::get('order-seller/{id?}', 'V1\\DeliveryOrderController@showOrderSeller');
-
-    //Notification
-    Route::get('notification', 'V1\\NotificationController@index');
-    Route::get('notification/{id}', 'V1\\NotificationController@show');
-    Route::get('notification-read-done', 'V1\\NotificationController@notificationReadDone');
-    Route::get('notification-read-not', 'V1\\NotificationController@notificationNotRead');
-
-    //Integration Taximachine Delivery
-
-    Route::get('estimate-delivery', 'V1\\EstimateDelivery@estimateDelivery');
-    
-    Route::post('admin-report-seller', 'V1\\AdminController@export');
-    Route::post('is-active-seller/{sellerId}', 'V1\\AdminController@isActive');
-    
 });
 
 Route::group(['prefix' => ''], function ($router) {
-    //User
-    Route::post('user', 'V1\\UserController@store');
-    Route::post('login', 'V1\\AuthController@login');
-    Route::get('example-weather/{id}', 'V1\\ExampleWeatherCotroller@show');
-    Route::get('indetification-types', 'V1\\MercadoPagoCotroller@showIdentificationType');
-
-    //Category
-    Route::get('category', 'V1\\CategoryController@index');
-    Route::get('category/{id}', 'V1\\CategoryController@show');
-    Route::get('category-seller/{id}', 'V1\\CategoryController@categoryWithseller');
-
-    //Products
-    Route::get('product/{id}', 'V1\\ProductController@show');
-
-    //Seller
-    Route::get('seller-products/{id}', 'V1\\SellerController@sellerWithProducts');
-    Route::get('seller/{id}', 'V1\\SellerController@showSubCategoryWithProduct');
-    Route::get('seller', 'V1\\SellerController@index');        
+    Route::post('user', [UserController::class, 'store']);
+    Route::post('login', [AuthController::class, 'login']);
 });

@@ -166,13 +166,7 @@ return [
          * Package Service Providers...
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        \App\Providers\ExampleWeatherProvider::class,
-        \App\Providers\MercadoPagoProvider::class,
-        \App\Providers\OpenDeliveryServiceProvider::class,
-        \App\Providers\EstimateDeliverySeviceProvider::class,
-        \App\Providers\AddressByZipCodeServiceProvider::class,
-        \App\Providers\GeoCodeServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
+        \Infrastructure\Providers\ApplicationProvider::class,
         /*
          * Application Service Providers...
          */
