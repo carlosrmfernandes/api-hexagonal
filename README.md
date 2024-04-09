@@ -1,9 +1,4 @@
-![alt text](https://avatars.githubusercontent.com/u/66464086?s=200&v=4)
-
-# APi Hope
-
-O micro-serviço `api-hope` tem a responsabilidade de facilitar a criação e a implementação de um projeto inicial.
-
+# APi
 ### DOCUMENTAÇÃO
 
 - [Para iniciar](#para-iniciar-o-serviço)
@@ -43,6 +38,10 @@ Escrevi esse artigo de como Como criar containers com Laravel, PostgreSQL, PgAdm
 | php-fpm | 5050 |
 
 ## Design de software
+
+```php
+Arquitetura Hexagonal 
+```
 
 ```php
 S O L I D 
@@ -127,18 +126,6 @@ php artisan migrate
 ```php
 php artisan db:seed
 ```
-
-## Execução das queue 
-
-Acessar o container onde esta à aplicacão e dentro do diretório do projecto executar os seguinte comando
-
-Execute o seguinte comando 
-
-```php
-php artisan queue:work
-```
-
-
 ## Teste Unintário  
 
 Acessar o container onde esta à aplicacão e dentro do diretório do projecto execute o seguinte comando para executar os testes

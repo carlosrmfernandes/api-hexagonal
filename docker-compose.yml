@@ -51,7 +51,7 @@ services:
       - "5431:5432"
 
     environment:
-      - POSTGRES_DB=go-wash-test
+      - POSTGRES_DB=dev
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=root
     networks:
